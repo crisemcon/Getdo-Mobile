@@ -30,8 +30,8 @@ const ItemsState = (props) => {
 			{
 				id: 1,
 				category: "inbox",
-				name: "test inbox",
-				note: "",
+				name: "test inbox1",
+				note: "- asdasas",
 				focus: false,
 				done: false,
 				tags: [
@@ -81,7 +81,7 @@ const ItemsState = (props) => {
 			{
 				id: 5,
 				category: "inbox",
-				name: "test inbox",
+				name: "test inbox2",
 				note: lorem,
 				focus: false,
 				done: false,
@@ -95,7 +95,7 @@ const ItemsState = (props) => {
 			{
 				id: 6,
 				category: "inbox",
-				name: "test inbox",
+				name: "test inbox3",
 				note: lorem,
 				focus: true,
 				done: false,
@@ -226,7 +226,7 @@ const ItemsState = (props) => {
 			{
 				id: 16,
 				category: "inbox",
-				name: "test inbox",
+				name: "test inbox4",
 				note: lorem,
 				focus: false,
 				done: false,
@@ -307,7 +307,7 @@ const ItemsState = (props) => {
 	//FUNCTIONS
 	//get items from selected category
 	const getItems = (category) => {
-		state.items.filter(
+		return state.items.filter(
 			(item) => item.category === category
 		)
 	};
