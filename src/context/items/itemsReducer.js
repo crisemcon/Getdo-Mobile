@@ -11,6 +11,7 @@ import {
 	CURRENT_ITEM,
 	EDIT_ITEM,
 	UNSELECT_ITEM,
+	CURRENT_CATEGORY,
 	/*ITEM_STATE,
 	CURRENT_ITEM,
 	UPDATE_ITEM,*/
@@ -18,6 +19,11 @@ import {
 
 export default (state, action) => {
 	switch (action.type) {
+		case CURRENT_CATEGORY:
+			return {
+				...state,
+				currentcategory: action.payload
+			}
 		case ITEM_CATEGORIE:
 			if (action.payload === "focus") {
 				return {

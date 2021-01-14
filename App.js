@@ -11,6 +11,7 @@ import Tags from './src/Screens/Tags';
 import Projects from './src/Screens/Projects';
 import Notebooks from './src/Screens/Notebooks';
 import Trash from './src/Screens/Trash';
+import Sidebar from './src/Components/Sidebar';
 
 import {Provider as PaperProvider, DefaultTheme} from 'react-native-paper';
 
@@ -33,7 +34,7 @@ export default function App() {
     <ItemsState>
       <PaperProvider theme={theme}>
         <NavigationContainer>
-          <Drawer.Navigator initialRouteName="GETDO">
+          <Drawer.Navigator initialRouteName="GETDO" drawerContent={props=><Sidebar {...props} />}>
             <Drawer.Screen name="Inbox" component={Inbox} />
             <Drawer.Screen name="Next" component={Next} />
             <Drawer.Screen name="Waiting" component={Waiting} />

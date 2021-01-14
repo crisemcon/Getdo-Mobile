@@ -102,6 +102,7 @@ const ItemCard = ({item}) => {
 
   const handleItemFocus = () => {
     focusItem(item);
+    getItems(currentcategory);
   };
 
   const handleItemDone = () => {
@@ -115,7 +116,7 @@ const ItemCard = ({item}) => {
 		} else {
 			item.trash = true;
 			editItem(item);
-			getItems(item.category); //TODO:current category
+			getItems(currentcategory); //TODO:current category
 		}
   }
 

@@ -16,6 +16,7 @@ import {
 	CURRENT_ITEM,
 	EDIT_ITEM,
 	UNSELECT_ITEM,
+	CURRENT_CATEGORY,
 	/*
 	UPDATE_ITEM,
 	ITEM_STATE,
@@ -335,6 +336,14 @@ const ItemsState = (props) => {
 	const [state, dispatch] = useReducer(itemsReducer, initialState);
 
 	//FUNCTIONS
+	//selects the current category
+	const setCurrentCategory = (categoryname) => {
+		dispatch({
+			type: CURRENT_CATEGORY,
+			payload: categoryname,
+		});
+	};
+
 	//get items from selected category
 	const getItems = (category) => {
 		dispatch({
@@ -501,6 +510,7 @@ const ItemsState = (props) => {
 				saveCurrentItem,
 				editItem,
 				unselectCurrentItem,
+				setCurrentCategory
 			}}
 		>
 			{props.children}
