@@ -18,6 +18,68 @@ import {
 
 export default (state, action) => {
 	switch (action.type) {
+		case ITEM_CATEGORIE:
+			if (action.payload === "focus") {
+				return {
+					...state,
+					focusitems: state.items.filter(
+						(item) => item.focus === true && item.trash === false
+					),
+				};
+			} else if (action.payload === "inbox") {
+				return {
+					...state,
+					inboxitems: state.items.filter(
+						(item) => item.category === action.payload && item.trash === false
+					),
+				};
+			} else if (action.payload === "next") {
+				return {
+					...state,
+					nextitems: state.items.filter(
+						(item) => item.category === action.payload && item.trash === false
+					),
+				};
+			} else if (action.payload === "scheduled") {
+				return {
+					...state,
+					scheduleditems: state.items.filter(
+						(item) => item.category === action.payload && item.trash === false
+					),
+				};
+			} else if (action.payload === "someday") {
+				return {
+					...state,
+					somedayitems: state.items.filter(
+						(item) => item.category === action.payload && item.trash === false
+					),
+				};
+			} else if (action.payload === "projects") {
+				return {
+					...state,
+					projectsitems: state.items.filter(
+						(item) => item.category === action.payload && item.trash === false
+					),
+				};
+			} else if (action.payload === "notebooks") {
+				return {
+					...state,
+					notebooksitems: state.items.filter(
+						(item) => item.category === action.payload && item.trash === false
+					),
+				};
+			} else if (action.payload === "trash") {
+				return {
+					...state,
+					trashitems: state.items.filter(
+						(item) => item.trash === true
+					),
+				};
+			}
+			return {
+				...state,
+			};
+			
 		case ADD_ITEM:
 			return {
 				...state,

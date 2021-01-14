@@ -41,6 +41,7 @@ const ItemsState = (props) => {
 				],
 				parent: "standalone",
 				items: [],
+				trash: false,
 			},
 			{
 				id: 2,
@@ -52,6 +53,7 @@ const ItemsState = (props) => {
 				tags: [{ id: 1, name: "Universidad", type: "area" }],
 				parent: 3,
 				items: [],
+				trash: false,
 			},
 			{
 				id: 3,
@@ -62,6 +64,7 @@ const ItemsState = (props) => {
 				done: false,
 				tags: [{ id: 3, name: "Computador", type: "label" }],
 				items: [2, 6, 8],
+				trash: false,
 				parent: "standalone",
 			},
 			{
@@ -77,6 +80,7 @@ const ItemsState = (props) => {
 				],
 				parent: "standalone",
 				items: [],
+				trash: false,
 			},
 			{
 				id: 5,
@@ -91,6 +95,7 @@ const ItemsState = (props) => {
 				],
 				parent: "standalone",
 				items: [],
+				trash: false,
 			},
 			{
 				id: 6,
@@ -106,6 +111,7 @@ const ItemsState = (props) => {
 				],
 				parent: 3,
 				items: [],
+				trash: false,
 			},
 			{
 				id: 7,
@@ -117,6 +123,7 @@ const ItemsState = (props) => {
 				tags: [{ id: 3, name: "Computador", type: "label" }],
 				parent: "standalone",
 				items: [],
+				trash: false,
 			},
 			{
 				id: 8,
@@ -131,6 +138,7 @@ const ItemsState = (props) => {
 				],
 				parent: 3,
 				items: [],
+				trash: false,
 			},
 			{
 				id: 9,
@@ -146,6 +154,7 @@ const ItemsState = (props) => {
 				],
 				parent: "standalone",
 				items: [],
+				trash: false,
 			},
 			{
 				id: 10,
@@ -161,6 +170,7 @@ const ItemsState = (props) => {
 				],
 				parent: "standalone",
 				items: [],
+				trash: false,
 			},
 			{
 				id: 11,
@@ -175,6 +185,7 @@ const ItemsState = (props) => {
 				],
 				parent: "standalone",
 				items: [],
+				trash: false,
 			},
 			{
 				id: 12,
@@ -190,6 +201,7 @@ const ItemsState = (props) => {
 				],
 				parent: "standalone",
 				items: [],
+				trash: false,
 			},
 			{
 				id: 13,
@@ -201,6 +213,7 @@ const ItemsState = (props) => {
 				tags: [{ id: 2, name: "Mariella", type: "contact" }],
 				parent: "standalone",
 				items: [],
+				trash: false,
 			},
 			{
 				id: 14,
@@ -212,6 +225,7 @@ const ItemsState = (props) => {
 				tags: [{ id: 1, name: "Universidad", type: "area" }],
 				parent: "standalone",
 				items: [],
+				trash: false,
 			},
 			{
 				id: 15,
@@ -222,6 +236,7 @@ const ItemsState = (props) => {
 				tags: [{ id: 3, name: "Computador", type: "label" }],
 				parent: "standalone",
 				items: [],
+				trash: false,
 			},
 			{
 				id: 16,
@@ -236,6 +251,7 @@ const ItemsState = (props) => {
 				],
 				parent: 19,
 				items: [],
+				trash: false,
 			},
 			{
 				id: 17,
@@ -251,6 +267,7 @@ const ItemsState = (props) => {
 				],
 				parent: 19,
 				items: [],
+				trash: false,
 			},
 			{
 				id: 18,
@@ -266,6 +283,7 @@ const ItemsState = (props) => {
 				],
 				parent: 19,
 				items: [],
+				trash: false,
 			},
 			{
 				id: 19,
@@ -281,6 +299,7 @@ const ItemsState = (props) => {
 				],
 				items: [16, 17, 18],
 				parent: "standalone",
+				trash: false,
 			},
 			{
 				id: 20,
@@ -295,10 +314,21 @@ const ItemsState = (props) => {
 				],
 				parent: "standalone",
 				items: [],
+				trash: false,
 			},
 		],
+		inboxitems: [],
+		nextitems: [],
+		waitingitems: [],
+		scheduleditems: [],
+		somedayitems: [],
+		focusitems: [],
+		projectsitems: [],
+		notebooksitems: [],
+		trashitems: [],
 		erroritem: false,
 		currentitem: null,
+		currentcategory: 'inbox',
 	};
 
 	//create dispatch and state
@@ -307,9 +337,10 @@ const ItemsState = (props) => {
 	//FUNCTIONS
 	//get items from selected category
 	const getItems = (category) => {
-		return state.items.filter(
-			(item) => item.category === category
-		)
+		dispatch({
+			type: ITEM_CATEGORIE,
+			payload: category,
+		});
 	};
 
 	//add new item
@@ -445,6 +476,16 @@ const ItemsState = (props) => {
 				//categoryitems: state.categoryitems,
 				erroritem: state.erroritem,
 				currentitem: state.currentitem,
+				inboxitems: state.inboxitems,
+				nextitems: state.nextitems,
+				waitingitems: state.waitingitems,
+				scheduleditems: state.scheduleditems,
+				somedayitems: state.somedayitems,
+				focusitems: state.focusitems,
+				projectsitems: state.projectitems,
+				notebooksitems: state.notebooksitems,
+				trashitems: state.trashitems,
+				currentcategory: state.currentcategory,
 				getItems,
 				addItem,
 				validateItem,

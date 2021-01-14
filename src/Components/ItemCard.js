@@ -12,7 +12,7 @@ import {
   Menu,
   Surface,
   Chip,
-  Text
+  Text,
 } from 'react-native-paper';
 
 import {CheckBox as IconCheckBox} from 'react-native-elements';
@@ -73,7 +73,9 @@ const ItemCard = ({item}) => {
     doneItem,
     getProjectById,
     editItem,
-    saveCurrentItem
+    saveCurrentItem,
+    deleteItem,
+    currentcategory
   } = itemlistContext;
 
   const {
@@ -90,10 +92,6 @@ const ItemCard = ({item}) => {
     schedule,
   } = item;
 
-  const [donechecked, setDoneChecked] = useState(false);
-
-  const [focuschecked, setFocusChecked] = useState(false);
-
   const [expanded, setExpanded] = useState(true);
 
   const [visible, setVisible] = useState(false);
@@ -109,6 +107,17 @@ const ItemCard = ({item}) => {
   const handleItemDone = () => {
     doneItem(item);
   };
+
+  const handleItemDelete = () => {
+    if (item.trash) {
+			deleteItem(item);
+			getItems("trash");
+		} else {
+			item.trash = true;
+			editItem(item);
+			getItems(item.category); //TODO:current category
+		}
+  }
 
   const handleNoteCheck = (line) => {
 		const index = note.indexOf(line);
@@ -131,11 +140,12 @@ const ItemCard = ({item}) => {
           parent !== 'standalone' ? getProjectById(item.parent)[0].name : null
         }
         left={(props) => (
+          item.category !== "notebooks" ? (
           <Checkbox
             {...props}
             status={done ? 'checked' : 'unchecked'}
             onPress={handleItemDone}
-          />
+          />) : <Avatar.Icon size={36} icon="notebook" />
         )}
         right={(props) => (
           //<IconButton icon="dots-vertical" onPress={() => {}} />
@@ -145,7 +155,7 @@ const ItemCard = ({item}) => {
               onDismiss={closeMenu}
               anchor={<IconButton icon="dots-vertical" onPress={openMenu} />}>
               <Menu.Item onPress={() => {}} title="Edit" />
-              <Menu.Item onPress={() => {item.category = "trash"}} title="Delete" />
+              <Menu.Item onPress={handleItemDelete} title="Delete" />
             </Menu>
             <IconCheckBox
               center
