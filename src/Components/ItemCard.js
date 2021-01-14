@@ -19,10 +19,10 @@ import {CheckBox as IconCheckBox} from 'react-native-elements';
 import itemsContext from '../context/items/itemsContext';
 import Waiting from '../Screens/Waiting';
 
-const tagIcon = (tag) => {
-  if (tag.type === 'label') {
+const tagIcon = (tagtype) => {
+  if (tagtype === 'label') {
     return 'label';
-  } else if (tag.type === 'area') {
+  } else if (tagtype === 'area') {
     return 'map-marker';
   }
   return 'account';
@@ -116,7 +116,7 @@ const ItemCard = ({item}) => {
 		} else {
 			item.trash = true;
 			editItem(item);
-			getItems(currentcategory); //TODO:current category
+			getItems(currentcategory);
 		}
   }
 
@@ -176,7 +176,7 @@ const ItemCard = ({item}) => {
             ? null
             : tags.map((tag) => (
                 <React.Fragment key={tag.id}>
-                  <Chip mode="outlined" icon={tagIcon(tag)} style={styles.tag}>
+                  <Chip mode="outlined" icon={tagIcon(tag.type)} style={styles.tag}>
                     {tag.name}
                   </Chip>
                 </React.Fragment>

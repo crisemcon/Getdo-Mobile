@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {
   Button,
@@ -14,17 +14,31 @@ import {
 import SelectCategory from './SelectCategory';
 import SelectTag from './SelectTag';
 
+import itemsContext from "../context/items/itemsContext";
+
 
 
 const NewItemDialog = () => {
   const [visible, setVisible] = useState(false);
-
   const showDialog = () => setVisible(true);
-
   const hideDialog = () => setVisible(false);
 
-  const currentitem = null; //TODO: ADD THESE VARIABLES FROM CONTEXT
-  const category = 'inbox';
+  //get itemsState
+	const itemlistContext = useContext(itemsContext);
+	const {
+		erroritem,
+		currentitem,
+		getItems,
+		addItem,
+		validateItem,
+		getProjects,
+		itemBelongsProject,
+		editItem,
+    unselectCurrentItem,
+    currentcategory
+	} = itemlistContext;
+
+ //TODO: ADD THESE VARIABLES FROM CONTEXT
   const projectId = undefined;
 
   const [item, updateItem] = useState(
@@ -34,10 +48,10 @@ const NewItemDialog = () => {
           name: '',
           note: '',
           category:
-            category !== 'trash' && category !== 'focus'
+            currentcategory !== 'trash' && currentcategory !== 'focus'
               ? projectId !== undefined
                 ? 'next'
-                : category
+                : currentcategory
               : 'inbox',
           tags: [],
           parent: projectId !== undefined ? projectId : 'standalone',

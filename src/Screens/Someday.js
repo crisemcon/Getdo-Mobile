@@ -25,7 +25,7 @@ const Someday = ({navigation}) => {
 
   useFocusEffect(
     useCallback(() => {
-      getItems("trash");
+      getItems("someday");
     }, [])
   );
 

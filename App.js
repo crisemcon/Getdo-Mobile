@@ -16,6 +16,7 @@ import Sidebar from './src/Components/Sidebar';
 import {Provider as PaperProvider, DefaultTheme} from 'react-native-paper';
 
 import ItemsState from './src/context/items/itemsState';
+import TagState from './src/context/tags/tagsState';
 
 const Drawer = createDrawerNavigator();
 
@@ -32,22 +33,26 @@ const theme = {
 export default function App() {
   return (
     <ItemsState>
-      <PaperProvider theme={theme}>
-        <NavigationContainer>
-          <Drawer.Navigator initialRouteName="GETDO" drawerContent={props=><Sidebar {...props} />}>
-            <Drawer.Screen name="Inbox" component={Inbox} />
-            <Drawer.Screen name="Next" component={Next} />
-            <Drawer.Screen name="Waiting" component={Waiting} />
-            <Drawer.Screen name="Scheduled" component={Scheduled} />
-            <Drawer.Screen name="Someday" component={Someday} />
-            <Drawer.Screen name="Focus" component={Focus} />
-            <Drawer.Screen name="Tags" component={Tags} />
-            <Drawer.Screen name="Projects" component={Projects} />
-            <Drawer.Screen name="Notebooks" component={Notebooks} />
-            <Drawer.Screen name="Trash" component={Trash} />
-          </Drawer.Navigator>
-        </NavigationContainer>
-      </PaperProvider>
+      <TagState>
+        <PaperProvider theme={theme}>
+          <NavigationContainer>
+            <Drawer.Navigator
+              initialRouteName="GETDO"
+              drawerContent={(props) => <Sidebar {...props} />}>
+              <Drawer.Screen name="Inbox" component={Inbox} />
+              <Drawer.Screen name="Next" component={Next} />
+              <Drawer.Screen name="Waiting" component={Waiting} />
+              <Drawer.Screen name="Scheduled" component={Scheduled} />
+              <Drawer.Screen name="Someday" component={Someday} />
+              <Drawer.Screen name="Focus" component={Focus} />
+              <Drawer.Screen name="Tags" component={Tags} />
+              <Drawer.Screen name="Projects" component={Projects} />
+              <Drawer.Screen name="Notebooks" component={Notebooks} />
+              <Drawer.Screen name="Trash" component={Trash} />
+            </Drawer.Navigator>
+          </NavigationContainer>
+        </PaperProvider>
+      </TagState>
     </ItemsState>
   );
 }

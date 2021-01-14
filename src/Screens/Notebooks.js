@@ -25,7 +25,7 @@ const Notebooks = ({navigation}) => {
 
   useFocusEffect(
     useCallback(() => {
-      getItems("trash");
+      getItems("notebooks");
     }, [])
   );
 

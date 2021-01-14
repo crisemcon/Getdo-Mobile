@@ -25,7 +25,7 @@ const Scheduled = ({navigation}) => {
 
   useFocusEffect(
     useCallback(() => {
-      getItems("trash");
+      getItems("scheduled");
     }, [])
   );
 

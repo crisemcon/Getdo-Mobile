@@ -25,7 +25,7 @@ const Next = ({navigation}) => {
 
   useFocusEffect(
     useCallback(() => {
-      getItems("trash");
+      getItems("next");
     }, [])
   );
 

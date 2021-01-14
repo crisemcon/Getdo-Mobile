@@ -1,58 +1,38 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useContext} from 'react';
 import {View, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 
-const items = [
-  // this is the parent or 'item'
-  {
-    name: 'Areas',
-    id: 0,
-    // these are the children or 'sub items'
-    children: [
-      {
-        name: 'Home',
-        id: 1,
-      },
-      {
-        name: 'University',
-        id: 2,
-      },
-    ],
-  },
-  {
-    name: 'Labels',
-    id: 1,
-    // these are the children or 'sub items'
-    children: [
-      {
-        name: 'Computer',
-        id: 3,
-      },
-      {
-        name: 'Smartphone',
-        id: 4,
-      },
-    ],
-  },
-  {
-    name: 'Contacts',
-    id: 2,
-    // these are the children or 'sub items'
-    children: [
-      {
-        name: 'Mariella',
-        id: 5,
-      },
-      {
-        name: 'Cristian',
-        id: 6,
-      },
-    ],
-  },
-];
+import tagsContext from '../context/tags/tagsContext';
+
 
 const SelectTag = () => {
+  //get tagsState
+  const tagContext = useContext(tagsContext);
+  const {tags} = tagContext;
+  const areaTags = tags.filter((tag) => tag.type === 'area');
+  const contactTags = tags.filter((tag) => tag.type === 'contact');
+  const labelTags = tags.filter((tag) => tag.type === 'label');
+
+  const items = [
+    // this is the parent or 'item'
+    {
+      name: 'Areas',
+      id: 0,
+      children: areaTags,
+    },
+    {
+      name: 'Contacts',
+      id: 1,
+      children: contactTags,
+    },
+    {
+      name: 'Labels',
+      id: 2,
+      children: labelTags,
+    }
+  ];
+
   const ref = useRef(null);
   // ref.current._toggleSelector()
   const [selectedItems, setSelectedItems] = useState([]);

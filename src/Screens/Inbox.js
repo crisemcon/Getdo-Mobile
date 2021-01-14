@@ -25,7 +25,7 @@ const Inbox = ({navigation}) => {
 
   useFocusEffect(
     useCallback(() => {
-      getItems("trash");
+      getItems("inbox");
     }, [])
   );
 

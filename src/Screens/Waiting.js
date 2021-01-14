@@ -25,7 +25,7 @@ const Waiting = ({navigation}) => {
 
   useFocusEffect(
     useCallback(() => {
-      getItems("trash");
+      getItems("waiting");
     }, [])
   );
 
