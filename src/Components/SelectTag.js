@@ -6,7 +6,7 @@ import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import tagsContext from '../context/tags/tagsContext';
 
 
-const SelectTag = () => {
+const SelectTag = ({setSelectedTags}) => {
   //get tagsState
   const tagContext = useContext(tagsContext);
   const {tags} = tagContext;
@@ -47,6 +47,7 @@ const SelectTag = () => {
         showDropDowns={true}
         readOnlyHeadings={true}
         onSelectedItemsChange={setSelectedItems}
+        onSelectedItemObjectsChange	={setSelectedTags}
         selectedItems={selectedItems}
         styles={{selectToggle: styles.container}}
       />

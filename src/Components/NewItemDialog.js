@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {
   Button,
@@ -8,37 +8,40 @@ import {
   FAB,
   TextInput,
   Text,
-  List
+  List,
 } from 'react-native-paper';
 
 import SelectCategory from './SelectCategory';
 import SelectTag from './SelectTag';
+import SelectParent from './SelectParent';
+import SelectTimeRequired from './SelectTimeRequired';
+import SelectEnergyRequired from './SelectEnergyRequired';
 
-import itemsContext from "../context/items/itemsContext";
-
-
+import itemsContext from '../context/items/itemsContext';
 
 const NewItemDialog = () => {
   const [visible, setVisible] = useState(false);
   const showDialog = () => setVisible(true);
-  const hideDialog = () => setVisible(false);
+  const hideDialog = () => {
+    setVisible(false);
+  };
 
   //get itemsState
-	const itemlistContext = useContext(itemsContext);
-	const {
-		erroritem,
-		currentitem,
-		getItems,
-		addItem,
-		validateItem,
-		getProjects,
-		itemBelongsProject,
-		editItem,
+  const itemlistContext = useContext(itemsContext);
+  const {
+    erroritem,
+    currentitem,
+    getItems,
+    addItem,
+    validateItem,
+    getProjects,
+    itemBelongsProject,
+    editItem,
     unselectCurrentItem,
-    currentcategory
-	} = itemlistContext;
+    currentcategory,
+  } = itemlistContext;
 
- //TODO: ADD THESE VARIABLES FROM CONTEXT
+  //TODO: ADD THESE VARIABLES FROM CONTEXT
   const projectId = undefined;
 
   const [item, updateItem] = useState(
@@ -67,10 +70,29 @@ const NewItemDialog = () => {
         },
   );
 
+  useEffect(() => {
+    updateItem({...item, category: currentcategory});
+  }, [currentcategory]);
+
   const setCategory = (category) => {
-	handleFormChange(category, 'category');
+    handleFormChange(category, 'category');
+  };
+
+  const setParent = (parent) => {
+    handleFormChange(parent, 'parent');
+  };
+
+  const setTags = (tags) => {
+    handleFormChange(tags, 'tags');
+  };
+
+  const setTimeRequired = (time) => {
+    handleFormChange(time, 'time');
+  };
+
+  const setEnergyRequired = (energy) => {
+    handleFormChange(energy, 'energy')
   }
-  
 
   //function to read form values
   const handleFormChange = (text, field) => {
@@ -101,21 +123,30 @@ const NewItemDialog = () => {
               mode="outlined"
               onChangeText={(text) => handleFormChange(text, 'note')}
             />
-            <SelectCategory category={item.category} setCategory={setCategory}/>
-            <SelectTag />
-            {/*<RNPickerSelect
-			placeholder={{label: item.category}}
-              onValueChange={(text) => handleFormChange(text, 'category')}
-              items={[
-                {label: 'Inbox', value: 'inbox'},
-                {label: 'Next', value: 'next'},
-                {label: 'Waiting', value: 'waiting'},
-                {label: 'Scheduled', value: 'scheduled'},
-                {label: 'Someday', value: 'someday'},
-                {label: 'Projects', value: 'projects'},
-                {label: 'Notebooks', value: 'notebooks'},
-              ]}
-            />*/}
+            <SelectCategory
+              category={item.category}
+              setCategory={setCategory}
+            />
+            {item.category !== 'projects' &&
+            item.category !== 'notebooks' &&
+            item.category !== 'inbox' ? (
+              <SelectParent parent={item.parent} setParent={setParent} />
+            ) : null}
+            <SelectTag setSelectedTags={setTags} />
+            {item.category !== 'projects' &&
+            item.category !== 'notebooks' &&
+            item.category !== 'inbox' ? (
+              <>
+              <SelectTimeRequired
+                time={item.time}
+                setTimeRequired={setTimeRequired}
+              />
+              <SelectEnergyRequired
+                energy={item.energy}
+                setEnergyRequired={setEnergyRequired}
+              />
+              </>
+            ) : null}
           </Dialog.Content>
           <Dialog.Actions>
             <Button onPress={hideDialog}>Done</Button>
