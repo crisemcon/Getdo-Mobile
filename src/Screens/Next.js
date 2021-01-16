@@ -2,7 +2,6 @@ import React, {useState, useEffect, useContext,useCallback} from 'react';
 import {View, ScrollView, StyleSheet} from 'react-native';
 import {Appbar, List} from 'react-native-paper';
 import ItemCard from '../Components/ItemCard';
-import NewItemDialog from '../Components/NewItemDialog';
 import itemsContext from '../context/items/itemsContext';
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -35,7 +34,6 @@ const Next = ({navigation}) => {
         <Appbar.Action icon="menu" onPress={() => navigation.openDrawer()} />
         <Appbar.Content title="Next" />
       </Appbar.Header>
-      <NewItemDialog />
       <View style={{flex: 1, padding: 6}}>
         {nextitems.map((item) =>
           item.done ? null : <ItemCard key={item.id} item={item} />,

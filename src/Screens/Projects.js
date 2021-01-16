@@ -2,7 +2,6 @@ import React, {useState, useEffect, useContext,useCallback} from 'react';
 import {View, ScrollView, StyleSheet} from 'react-native';
 import {Appbar, List} from 'react-native-paper';
 import ItemCard from '../Components/ItemCard';
-import NewItemDialog from '../Components/NewItemDialog';
 import itemsContext from '../context/items/itemsContext';
 import { useFocusEffect } from '@react-navigation/native';
 import ProjectCard from '../Components/ProjectCard';
@@ -39,7 +38,6 @@ const Projects = ({navigation}) => {
         <Appbar.Action icon="menu" onPress={() => navigation.openDrawer()} />
         <Appbar.Content title="Projects" />
       </Appbar.Header>
-      <NewItemDialog />
       <View style={{flex: 1, padding: 6}}>
         {projectsitems.map((item) =>
           item.done ? null : <ProjectCard key={item.id} item={item} />,

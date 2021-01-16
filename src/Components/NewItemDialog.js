@@ -22,9 +22,7 @@ import SelectWaiting from './SelectWaiting';
 
 import itemsContext from '../context/items/itemsContext';
 
-const NewItemDialog = () => {
-  const [visible, setVisible] = useState(false);
-  const showDialog = () => setVisible(true);
+const NewItemDialog = ({visible, setVisible, projectId}) => {
   const hideDialog = () => {
     setVisible(false);
   };
@@ -43,9 +41,6 @@ const NewItemDialog = () => {
     unselectCurrentItem,
     currentcategory,
   } = itemlistContext;
-
-  //TODO: ADD THESE VARIABLES FROM CONTEXT
-  const projectId = undefined;
 
   const [item, updateItem] = useState(
     currentitem !== null
@@ -73,10 +68,6 @@ const NewItemDialog = () => {
         },
   );
 
-  useEffect(() => {
-    updateItem({...item, category: currentcategory});
-  }, [currentcategory]);
-
   const setCategory = (category) => {
     handleFormChange(category, 'category');
   };
@@ -102,12 +93,12 @@ const NewItemDialog = () => {
   };
 
   const setScheduledDate = (scheduleddate) => {
-    handleFormChange(scheduleddate, 'schedule')
-  }
+    handleFormChange(scheduleddate, 'schedule');
+  };
 
   const setWaiting = (waitingtag) => {
-    handleFormChange(waitingtag, 'waiting')
-  }
+    handleFormChange(waitingtag, 'waiting');
+  };
 
   //function to read form values
   const handleFormChange = (text, field) => {
@@ -118,39 +109,36 @@ const NewItemDialog = () => {
   };
 
   const handleSubmit = () => {
-		//e.preventDefault();
-		//validate if itemname is empty
-		if (item.name.trim() === "") {
-			validateItem();
-			return;
-		}
+    //e.preventDefault();
+    //validate if itemname is empty
+    if (item.name.trim() === '') {
+      validateItem();
+      return;
+    }
 
-		//checks if it is edition or new item
-		if(currentitem === null){
-			//new item
-			addItem(item);
-			//if it has a parent, attach to it
-			if (item.parent !== "standalone") {
-				itemBelongsProject(item);
-			}
-		} else {
-			editItem(item);
-		}
+    //checks if it is edition or new item
+    if (currentitem === null) {
+      //new item
+      addItem(item);
+      //if it has a parent, attach to it
+      if (item.parent !== 'standalone') {
+        itemBelongsProject(item);
+      }
+    } else {
+      editItem(item);
+    }
 
-		//get and display the new item if it belongs to the current category
-		if (currentcategory === item.category) {
-			getItems(currentcategory);
-		}
-		//reset form and close dialog
-		hideDialog();
-		//resetState();
-	};
+    //get and display the new item if it belongs to the current category
+    if (currentcategory === item.category) {
+      getItems(currentcategory);
+    }
+    //reset form and close dialog
+    hideDialog();
+    //resetState();
+  };
 
   return (
     <View>
-      <Portal>
-        <FAB style={styles.fab} icon="plus" onPress={showDialog} />
-      </Portal>
       <Portal>
         <Dialog
           visible={visible}
@@ -176,8 +164,11 @@ const NewItemDialog = () => {
                   category={item.category}
                   setCategory={setCategory}
                 />
-                {item.category === "waiting" ? (
-                  <SelectWaiting waiting={item.waiting} setWaiting={setWaiting} />
+                {item.category === 'waiting' ? (
+                  <SelectWaiting
+                    waiting={item.waiting}
+                    setWaiting={setWaiting}
+                  />
                 ) : null}
                 {item.category !== 'projects' &&
                 item.category !== 'notebooks' &&
@@ -185,12 +176,20 @@ const NewItemDialog = () => {
                   <SelectParent parent={item.parent} setParent={setParent} />
                 ) : null}
                 <SelectTag setSelectedTags={setTags} />
-                
-                {item.category === "scheduled" ? (
-                  <SelectScheduledDateTime scheduledDate={item.schedule} setScheduledDate={setScheduledDate} />
-                ) : null }
-                {item.category !== 'inbox' && item.category !== 'notebooks' && item.category !== 'scheduled' ? (
-                  <SelectDueDate duedate={item.dueDate} setDueDate={setDueDate} />
+
+                {item.category === 'scheduled' ? (
+                  <SelectScheduledDateTime
+                    scheduledDate={item.schedule}
+                    setScheduledDate={setScheduledDate}
+                  />
+                ) : null}
+                {item.category !== 'inbox' &&
+                item.category !== 'notebooks' &&
+                item.category !== 'scheduled' ? (
+                  <SelectDueDate
+                    duedate={item.dueDate}
+                    setDueDate={setDueDate}
+                  />
                 ) : null}
                 {item.category !== 'projects' &&
                 item.category !== 'notebooks' &&
@@ -217,14 +216,5 @@ const NewItemDialog = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  fab: {
-    position: 'absolute',
-    margin: 16,
-    right: 0,
-    bottom: 0,
-  },
-});
 
 export default NewItemDialog;

@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useContext, useCallback} from 'react';
 import {View, ScrollView, StyleSheet} from 'react-native';
 import {Appbar, List, Button, Surface} from 'react-native-paper';
-import NewItemDialog from '../Components/NewItemDialog';
 import tagsContext from '../context/tags/tagsContext';
 import itemsContext from '../context/items/itemsContext';
 import {useFocusEffect} from '@react-navigation/native';
@@ -49,7 +48,6 @@ const Tags = ({navigation}) => {
         <Appbar.Action icon="menu" onPress={() => navigation.openDrawer()} />
         <Appbar.Content title="Tags" />
       </Appbar.Header>
-      <NewItemDialog />
       <View style={{flex: 1, padding: 6}}>
         <List.Accordion
           title="Areas"

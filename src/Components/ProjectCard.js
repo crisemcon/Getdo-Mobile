@@ -194,7 +194,6 @@ const ProjectCard = ({item}) => {
             </Chip>
           ) : null}
         </Surface>
-        {note.length !== 0 ?
         <List.Accordion
           style={{padding: 0}}
           expanded={expanded}
@@ -235,7 +234,10 @@ const ProjectCard = ({item}) => {
 								</React.Fragment>
 						  ))
 						: null}
-        </List.Accordion> : null}
+        </List.Accordion>
+		{
+			//TODO: add button to add new project item
+		}
       </Card.Content>
     </Card>
   );

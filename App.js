@@ -17,6 +17,7 @@ import {Provider as PaperProvider, DefaultTheme} from 'react-native-paper';
 
 import ItemsState from './src/context/items/itemsState';
 import TagState from './src/context/tags/tagsState';
+import NewItemFAB from './src/Components/NewItemFAB';
 
 const Drawer = createDrawerNavigator();
 
@@ -51,6 +52,7 @@ export default function App() {
               <Drawer.Screen name="Trash" component={Trash} />
             </Drawer.Navigator>
           </NavigationContainer>
+          <NewItemFAB />
         </PaperProvider>
       </TagState>
     </ItemsState>
