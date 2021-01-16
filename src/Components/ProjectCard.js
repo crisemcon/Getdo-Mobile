@@ -1,5 +1,5 @@
 import React, {useState, useContext} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {
   Avatar,
   Button,
@@ -19,6 +19,7 @@ import {
 import {CheckBox as IconCheckBox} from 'react-native-elements';
 import itemsContext from '../context/items/itemsContext';
 import ItemCard from './ItemCard';
+import NewItemDialog from './NewItemDialog';
 
 const tagIcon = (tagtype) => {
   if (tagtype === 'label') {
@@ -98,12 +99,12 @@ const ProjectCard = ({item}) => {
   } = item;
 
   const [expanded, setExpanded] = useState(true);
-
   const [visible, setVisible] = useState(false);
 
   const openMenu = () => setVisible(true);
-
   const closeMenu = () => setVisible(false);
+
+  const [opendialog, setOpenDialog] = useState(false);
 
   const handleItemFocus = () => {
     focusItem(item);
@@ -235,9 +236,12 @@ const ProjectCard = ({item}) => {
 						  ))
 						: null}
         </List.Accordion>
-		{
-			//TODO: add button to add new project item
-		}
+        <View style={{flex: 1}}>
+          <Button icon="plus" mode="outlined" onPress={() => setOpenDialog(true)}>
+            NEW PROJECT ACTION
+          </Button>
+          {opendialog ? <NewItemDialog visible={opendialog} setVisible={setOpenDialog} projectId={item.id} /> : null}
+        </View>
       </Card.Content>
     </Card>
   );

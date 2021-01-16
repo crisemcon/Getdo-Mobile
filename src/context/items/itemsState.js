@@ -412,7 +412,7 @@ const ItemsState = (props) => {
 	//get items by id for projects, so trash items are not called
 	const getItemsById = itemsid => {
 		const itemArray = state.items.filter(function(item){
-			return itemsid.indexOf(item.id) !== -1 && item.category !== "trash";
+			return itemsid.indexOf(item.id) !== -1 && !item.trash;;
 		})
 		return itemArray;
 	};
