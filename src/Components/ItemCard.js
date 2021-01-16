@@ -17,6 +17,7 @@ import {
 
 import {CheckBox as IconCheckBox} from 'react-native-elements';
 import itemsContext from '../context/items/itemsContext';
+import NewItemDialog from '../Components/NewItemDialog';
 
 const tagIcon = (tagtype) => {
   if (tagtype === 'label') {
@@ -48,7 +49,7 @@ function timeConversion(millisec) {
   } else if (hours >= 24 && hours < 48) {
     return `Tomorrow`;
   } else if (days >= 2 && days < 14) {
-    return days + " Days";
+    return days + ' Days';
   } else {
     return `${weeks} weeks`;
   }
@@ -64,11 +65,11 @@ const calcTimeRequired = (time) => {
 };
 
 const energyIcon = (energy) => {
-  if (energy === "Low") {
-    return "battery-20";
-  } else if (energy === "Medium") {
-    return "battery-50";
-  } else return "battery-80";
+  if (energy === 'Low') {
+    return 'battery-20';
+  } else if (energy === 'Medium') {
+    return 'battery-50';
+  } else return 'battery-80';
 };
 
 const ItemCard = ({item}) => {
@@ -82,7 +83,7 @@ const ItemCard = ({item}) => {
     editItem,
     saveCurrentItem,
     deleteItem,
-    currentcategory
+    currentcategory,
   } = itemlistContext;
 
   const {
@@ -100,12 +101,11 @@ const ItemCard = ({item}) => {
   } = item;
 
   const [expanded, setExpanded] = useState(true);
-
   const [visible, setVisible] = useState(false);
-
   const openMenu = () => setVisible(true);
-
   const closeMenu = () => setVisible(false);
+
+  const [openDialog, setOpenDialog] = useState(false);
 
   const handleItemFocus = () => {
     focusItem(item);
@@ -118,135 +118,174 @@ const ItemCard = ({item}) => {
 
   const handleItemDelete = () => {
     if (item.trash) {
-			deleteItem(item);
-			getItems("trash");
-		} else {
-			item.trash = true;
-			editItem(item);
-			getItems(currentcategory);
-		}
-  }
+      deleteItem(item);
+      getItems('trash');
+    } else {
+      item.trash = true;
+      editItem(item);
+      getItems(currentcategory);
+    }
+  };
+
+  const handleEditClick = () => {
+    saveCurrentItem(item);
+    setOpenDialog(true);
+    closeMenu();
+  };
+
+  const handleRestoreClick = () => {
+    item.trash = false;
+    getItems('trash');
+  };
 
   const handleNoteCheck = (line) => {
-		const index = note.indexOf(line);
-		let firstPart = note.substr(0, index);
-		let lastPart = note.substr(index + 1);
+    const index = note.indexOf(line);
+    let firstPart = note.substr(0, index);
+    let lastPart = note.substr(index + 1);
 
-		saveCurrentItem(item);
+    saveCurrentItem(item);
 
-		if (line[0] === "x") item.note = firstPart + "-" + lastPart;
-		if (line[0] === "-") item.note = firstPart + "x" + lastPart;
+    if (line[0] === 'x') item.note = firstPart + '-' + lastPart;
+    if (line[0] === '-') item.note = firstPart + 'x' + lastPart;
 
-		editItem(item);
-	};
+    editItem(item);
+  };
 
   return (
-    <Card style={{borderRadius: 6, marginBottom: 6}}>
-      <Card.Title
-        title={name}
-        subtitle={
-          parent !== 'standalone' ? getProjectById(item.parent)[0].name : null
-        }
-        left={(props) => (
-          item.category !== "notebooks" ? (
-          <Checkbox
-            {...props}
-            status={done ? 'checked' : 'unchecked'}
-            onPress={handleItemDone}
-          />) : <Avatar.Icon size={36} icon="notebook" />
-        )}
-        right={(props) => (
-          //<IconButton icon="dots-vertical" onPress={() => {}} />
-          <Surface style={{alignItems: 'center', flexDirection: 'row-reverse'}}>
-            <Menu
-              visible={visible}
-              onDismiss={closeMenu}
-              anchor={<IconButton icon="dots-vertical" onPress={openMenu} />}>
-              <Menu.Item onPress={() => {}} title="Edit" />
-              <Menu.Item onPress={handleItemDelete} title="Delete" />
-            </Menu>
-            <IconCheckBox
-              center
-              iconType="material"
-              checkedIcon="star"
-              uncheckedIcon="star-outline"
-              checkedColor="red"
-              checked={focus}
-              onPress={handleItemFocus}
-            />
+    <>
+      <Card style={{borderRadius: 6, marginBottom: 6}}>
+        <Card.Title
+          title={name}
+          subtitle={
+            parent !== 'standalone' ? getProjectById(item.parent)[0].name : null
+          }
+          left={(props) =>
+            item.category !== 'notebooks' ? (
+              <Checkbox
+                {...props}
+                status={done ? 'checked' : 'unchecked'}
+                onPress={handleItemDone}
+              />
+            ) : (
+              <Avatar.Icon size={36} icon="notebook" />
+            )
+          }
+          right={(props) => (
+            //<IconButton icon="dots-vertical" onPress={() => {}} />
+            <Surface
+              style={{alignItems: 'center', flexDirection: 'row-reverse'}}>
+              <Menu
+                visible={visible}
+                onDismiss={closeMenu}
+                anchor={<IconButton icon="dots-vertical" onPress={openMenu} />}>
+                {item.trash ? (
+                  <Menu.Item onPress={handleRestoreClick} title="Restore" />
+                ) : (
+                  <Menu.Item onPress={handleEditClick} title="Edit" />
+                )}
+                <Menu.Item onPress={handleItemDelete} title="Delete" />
+              </Menu>
+              <IconCheckBox
+                center
+                iconType="material"
+                checkedIcon="star"
+                uncheckedIcon="star-outline"
+                checkedColor="red"
+                checked={focus}
+                onPress={handleItemFocus}
+              />
+            </Surface>
+          )}
+        />
+        <Card.Content>
+          <Surface style={styles.tagContainer}>
+            {tags.length === 0
+              ? null
+              : tags.map((tag) => (
+                  <React.Fragment key={tag.id}>
+                    <Chip
+                      mode="outlined"
+                      icon={tagIcon(tag.type)}
+                      style={styles.tag}>
+                      {tag.name}
+                    </Chip>
+                  </React.Fragment>
+                ))}
+            {schedule ? (
+              <Chip mode="outlined" icon="calendar-clock" style={styles.tag}>
+                {schedule.toLocaleString()}
+              </Chip>
+            ) : null}
+            {waiting ? (
+              <Chip mode="outlined" icon="account-clock" style={styles.tag}>
+                {waiting}
+              </Chip>
+            ) : null}
+            {dueDate ? (
+              <Chip mode="outlined" icon="calendar-remove" style={styles.tag}>
+                {calcDueDate(dueDate)}
+              </Chip>
+            ) : null}
+            {time ? (
+              <Chip mode="outlined" icon="timer-sand" style={styles.tag}>
+                {calcTimeRequired(time)}
+              </Chip>
+            ) : null}
+            {energy ? (
+              <Chip
+                mode="outlined"
+                icon={energyIcon(energy)}
+                style={styles.tag}>
+                {energy}
+              </Chip>
+            ) : null}
           </Surface>
-        )}
-      />
-      <Card.Content>
-        <Surface style={styles.tagContainer}>
-          {tags.length === 0
-            ? null
-            : tags.map((tag) => (
-                <React.Fragment key={tag.id}>
-                  <Chip mode="outlined" icon={tagIcon(tag.type)} style={styles.tag}>
-                    {tag.name}
-                  </Chip>
-                </React.Fragment>
-              ))}
-          {schedule ? (
-            <Chip mode="outlined" icon="calendar-clock" style={styles.tag}>
-              {schedule.toLocaleString()}
-            </Chip>
-          ) : null}
-          {waiting ? (
-            <Chip mode="outlined" icon="account-clock" style={styles.tag}>
-              {waiting}
-            </Chip>
-          ) : null}
-          {dueDate ? (
-            <Chip mode="outlined" icon="calendar-remove" style={styles.tag}>
-              {calcDueDate(dueDate)}
-            </Chip>
-          ) : null}
-          {time ? (
-            <Chip mode="outlined" icon="timer-sand" style={styles.tag}>
-              {calcTimeRequired(time)}
-            </Chip>
-          ) : null}
-          {energy ? (
-            <Chip mode="outlined" icon={energyIcon(energy)} style={styles.tag}>
-              {energy}
-            </Chip>
-          ) : null}
-        </Surface>
-        {note.length !== 0 ?
-        <List.Accordion
-          style={{padding: 0}}
-          expanded={expanded}
-          onPress={() => setExpanded(!expanded)}>
-          <List.Item style={{padding: 0}} titleNumberOfLines={100} title={item.note.split(/\n/).map((line) => {
-						if (line[0] === "-")
-							return (
-								<React.Fragment key={line}>
-									<Checkbox
-										status={'unchecked'}
-										onPress={() => handleNoteCheck(line)}
-									/>
+          {note.length !== 0 ? (
+            <List.Accordion
+              style={{padding: 0}}
+              expanded={expanded}
+              onPress={() => setExpanded(!expanded)}>
+              <List.Item
+                style={{padding: 0}}
+                titleNumberOfLines={100}
+                title={item.note.split(/\n/).map((line) => {
+                  if (line[0] === '-')
+                    return (
+                      <React.Fragment key={line}>
+                        <Checkbox
+                          status={'unchecked'}
+                          onPress={() => handleNoteCheck(line)}
+                        />
 
-									{line.slice(1)}
-								</React.Fragment>
-							);
-						if (line[0] === "x")
-							return (
-								<React.Fragment key={line}>
-									<Checkbox
-										status={'checked'}
-										onPress={() => handleNoteCheck(line)}
-									/>
+                        {line.slice(1)}
+                      </React.Fragment>
+                    );
+                  if (line[0] === 'x')
+                    return (
+                      <React.Fragment key={line}>
+                        <Checkbox
+                          status={'checked'}
+                          onPress={() => handleNoteCheck(line)}
+                        />
 
-									{line.slice(1)}
-								</React.Fragment>
-							);
-						return <Text key={line} variant="body2">{line}</Text>;
-					})} />
-        </List.Accordion> : null}
-      </Card.Content>
-    </Card>
+                        {line.slice(1)}
+                      </React.Fragment>
+                    );
+                  return (
+                    <Text key={line} variant="body2">
+                      {line}
+                    </Text>
+                  );
+                })}
+              />
+            </List.Accordion>
+          ) : null}
+        </Card.Content>
+      </Card>
+      {openDialog ? (
+        <NewItemDialog visible={openDialog} setVisible={setOpenDialog} />
+      ) : null}
+    </>
   );
 };
 

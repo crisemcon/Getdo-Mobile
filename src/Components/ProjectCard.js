@@ -62,7 +62,7 @@ export const calcProjectTimeRequired = (items) => {
 	let sumTime = 0;
 	let flag = "";
 	items.forEach((item) => {
-		item.time ? (sumTime += item.time) : (flag = ">");
+		item.time && !item.done ? (sumTime += item.time) : (flag = ">");
 	});
 	if (sumTime === 0) {
 		return `Not set`;

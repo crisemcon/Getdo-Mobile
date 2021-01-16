@@ -1,12 +1,12 @@
 import React, {useRef, useState, useContext} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 
 import tagsContext from '../context/tags/tagsContext';
 
 
-const SelectTag = ({setSelectedTags}) => {
+const SelectTag = ({selectedTagsId, setSelectedTagsId, setSelectedTags}) => {
   //get tagsState
   const tagContext = useContext(tagsContext);
   const {tags} = tagContext;
@@ -32,26 +32,23 @@ const SelectTag = ({setSelectedTags}) => {
       children: labelTags,
     }
   ];
-
-  const ref = useRef(null);
-  // ref.current._toggleSelector()
-  const [selectedItems, setSelectedItems] = useState([]);
+  
   return (
     <View>
+      <Text style={styles.title}>Tags</Text>
       <SectionedMultiSelect
         items={items}
         IconRenderer={Icon}
         uniqueKey="id"
         subKey="children"
-        selectText="Tags"
+        selectText="Select Tags"
         showDropDowns={true}
         readOnlyHeadings={true}
-        onSelectedItemsChange={setSelectedItems}
+        onSelectedItemsChange={setSelectedTagsId}
         onSelectedItemObjectsChange	={setSelectedTags}
-        selectedItems={selectedItems}
+        selectedItems={selectedTagsId}
         styles={{selectToggle: styles.container}}
       />
-      {/*<Button onPress={() => ref?.current?._toggleSelector()} />*/}
     </View>
   );
 };
@@ -65,6 +62,10 @@ const styles = StyleSheet.create({
     height: 56,
     alignContent: 'center',
     paddingHorizontal: 8,
+  },
+  title: {
+    fontSize: 12,
+    marginTop: 10,
   },
 });
 

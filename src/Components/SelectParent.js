@@ -1,5 +1,5 @@
 import React, {useState, useContext} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Text} from 'react-native';
 
 import {Picker} from '@react-native-community/picker';
 import itemsContext from '../context/items/itemsContext';
@@ -12,10 +12,12 @@ const SelectParent = ({parent, setParent}) => {
 	} = itemlistContext;
 
   return (
+    <>
+    <Text style={styles.title}>Parent Project</Text>
     <View style={styles.container}>
         <Picker
           selectedValue={parent}
-          style={{height: 56}}
+          style={{height: 56, color: '#333'}}
           onValueChange={(itemValue, itemIndex) =>
             setParent(itemValue)
           }>
@@ -25,12 +27,17 @@ const SelectParent = ({parent, setParent}) => {
 			  ))}
         </Picker>
     </View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     borderColor: 'gray', borderWidth: 1, marginVertical: 6, borderRadius: 2
+  },
+  title: {
+    fontSize: 12,
+    marginTop: 10,
   },
 });
 

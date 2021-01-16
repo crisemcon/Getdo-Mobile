@@ -39,6 +39,7 @@ const TagCard = ({tag, handleTagDelete}) => {
       right={(props) => (
         //<IconButton icon="dots-vertical" onPress={() => {}} />
           <Menu
+            {...props}
             visible={visibleMenu}
             onDismiss={closeMenu}
             anchor={<IconButton icon="dots-vertical" onPress={openMenu} />}>

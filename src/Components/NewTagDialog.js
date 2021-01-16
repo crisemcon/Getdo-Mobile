@@ -16,22 +16,36 @@ import {
 
 const NewTagDialog = ({visible, setVisible, type}) => {
   const showDialog = () => setVisible(true);
-  const hideDialog = () => setVisible(false);
+  const hideDialog = () => {
+    unselectCurrentTag();
+    setVisible(false);
+  };
 
   //get itemsState
-	const itemlistContext = useContext(itemsContext);
-  const {updateItemsTag } = itemlistContext;
-  
+  const itemlistContext = useContext(itemsContext);
+  const {updateItemsTag} = itemlistContext;
+
   //get tags State
   const tagContext = useContext(tagsContext);
-  const {errortag, addTag, validateTag, updateTag, currenttag} = tagContext;
+  const {
+    errortag,
+    addTag,
+    validateTag,
+    updateTag,
+    currenttag,
+    unselectCurrentTag,
+  } = tagContext;
 
   //form
   //form tag state
-  const [tag, setTag] = useState(currenttag !== null ? currenttag :{
-    name: '',
-    type: type,
-  });
+  const [tag, setTag] = useState(
+    currenttag !== null
+      ? currenttag
+      : {
+          name: '',
+          type: type,
+        },
+  );
 
   //function to read form values
   const handleFormChange = (text, field) => {
@@ -48,14 +62,13 @@ const NewTagDialog = ({visible, setVisible, type}) => {
       return;
     }
 
-    if(currenttag === null){
+    if (currenttag === null) {
       //new tag
       addTag(tag);
-    }
-    else {
+    } else {
       //new tag
-		  updateTag(tag);
-		  updateItemsTag(tag);
+      updateTag(tag);
+      updateItemsTag(tag);
     }
 
     //reset form and close dialog
@@ -76,11 +89,11 @@ const NewTagDialog = ({visible, setVisible, type}) => {
               mode="outlined"
               onChangeText={(text) => handleFormChange(text, 'name')}
             />
+          </Dialog.Content>
+          <Dialog.Actions>
             <HelperText type="error" visible={errortag}>
               Tag name is required
             </HelperText>
-          </Dialog.Content>
-          <Dialog.Actions>
             <Button onPress={handleSubmit}>Done</Button>
           </Dialog.Actions>
         </Dialog>

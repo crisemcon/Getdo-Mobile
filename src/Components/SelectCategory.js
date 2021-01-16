@@ -22,7 +22,7 @@ const SelectCategory = ({category, setCategory}) => {
     <View style={styles.container}> 
         <Picker
           selectedValue={category}
-          style={{height: 56}}
+          style={{height: 56, color: '#333'}}
           onValueChange={(itemValue, itemIndex) =>
             setCategory(itemValue)
           }>

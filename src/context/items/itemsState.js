@@ -454,6 +454,13 @@ const ItemsState = (props) => {
 			type: UNSELECT_ITEM,
 		})
 	}
+
+	//dettach item to project
+	const itemNotBelongsProject = (item) => {
+		const project = state.items.filter(project => project.id === item.parent)[0];
+		project.items = project.items.filter(projectItemId => projectItemId !== item.id);
+		editItem(project);
+	}
 	/*
     //cambia el estado de cada tarea
     const cambiarEstadoTarea = tarea => {
@@ -510,7 +517,8 @@ const ItemsState = (props) => {
 				saveCurrentItem,
 				editItem,
 				unselectCurrentItem,
-				setCurrentCategory
+				setCurrentCategory,
+				itemNotBelongsProject
 			}}
 		>
 			{props.children}

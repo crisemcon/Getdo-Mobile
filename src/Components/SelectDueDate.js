@@ -1,7 +1,7 @@
 import React, {useState, useContext} from 'react';
-import {View, StyleSheet, Button, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {Text} from 'react-native-paper';
+import {Text, IconButton} from 'react-native-paper';
 
 
 const SelectDueDate = ({duedate, setDueDate}) => {
@@ -19,15 +19,19 @@ const SelectDueDate = ({duedate, setDueDate}) => {
   };
 
   return (
+    <>
+    <Text style={styles.title}>Due Date</Text>
     <View style={styles.container}>
-      
         <TouchableOpacity onPress={showDatepicker} style={{flex:1,justifyContent: 'center', marginLeft: 10}}>
-        <Text style={{fontSize: 16}}>{duedate ? duedate.toDateString() : 'Due Date'}</Text>
+        <Text style={{fontSize: 16, color: '#333'}}>{duedate ? duedate.toDateString() : 'Not Set'}</Text>
         </TouchableOpacity>
-      
-      {/*<View>
-        <Button onPress={showTimepicker} title="Show time picker!" />
-      </View>*/}
+        {duedate ?
+        <IconButton
+            icon="close"
+            size={20}
+            onPress={() => setDueDate(null)}
+          /> : null
+        }
       {show && (
         <DateTimePicker
           minimumDate={new Date()}
@@ -40,12 +44,17 @@ const SelectDueDate = ({duedate, setDueDate}) => {
         />
       )}
     </View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    borderColor: 'gray', borderWidth: 1, marginVertical: 6, borderRadius: 2, height: 56
+    borderColor: 'gray', borderWidth: 1, marginVertical: 6, borderRadius: 2, height: 56, flexDirection: 'row', alignItems: 'center'
+  },
+  title: {
+    fontSize: 12,
+    marginTop: 10,
   },
 });
 

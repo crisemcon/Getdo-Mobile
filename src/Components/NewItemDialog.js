@@ -1,12 +1,12 @@
 import React, {useState, useContext, useEffect} from 'react';
-import {View, StyleSheet, TouchableOpacity, ScrollView} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, ScrollView, TextInput} from 'react-native';
 import {
   Button,
   Paragraph,
   Dialog,
   Portal,
   FAB,
-  TextInput,
+  HelperText,
   Text,
   List,
 } from 'react-native-paper';
@@ -25,6 +25,7 @@ import itemsContext from '../context/items/itemsContext';
 const NewItemDialog = ({visible, setVisible, projectId}) => {
   const hideDialog = () => {
     setVisible(false);
+    unselectCurrentItem();
   };
 
   //get itemsState
@@ -40,6 +41,7 @@ const NewItemDialog = ({visible, setVisible, projectId}) => {
     editItem,
     unselectCurrentItem,
     currentcategory,
+    itemNotBelongsProject,
   } = itemlistContext;
 
   const [item, updateItem] = useState(
@@ -67,6 +69,8 @@ const NewItemDialog = ({visible, setVisible, projectId}) => {
           trash: false,
         },
   );
+
+  const [selectedTagsId, setSelectedTagsId] = useState(currentitem !== null ? currentitem.tags.map(tag => tag.id) : []);
 
   const setCategory = (category) => {
     handleFormChange(category, 'category');
@@ -115,7 +119,6 @@ const NewItemDialog = ({visible, setVisible, projectId}) => {
       validateItem();
       return;
     }
-
     //checks if it is edition or new item
     if (currentitem === null) {
       //new item
@@ -125,11 +128,47 @@ const NewItemDialog = ({visible, setVisible, projectId}) => {
         itemBelongsProject(item);
       }
     } else {
-      editItem(item);
+      if (item.category === "notebooks") {
+				item.done = false;
+      }
+      if (item.category === "scheduled" || item.category === "inbox" || item.category === "notebooks"){
+        item.dueDate = null;
+      }
+      if (item.category !== "scheduled"){
+        item.schedule = null;
+      }
+      if (item.category !== "waiting"){
+        item.waiting = undefined;
+      }
+      if (item.category === "inbox" || item.category === "notebooks" || item.category === "projects"){
+        item.schedule = null;
+        time = undefined;
+        energy = undefined;
+        waiting = undefined;
+      }
+      if (item.category !== "projects"){
+        item.items = [];
+      }
+			if (
+				currentitem.parent !== "standalone" &&
+				item.parent !== currentitem.parent
+			) {
+				itemNotBelongsProject(currentitem);
+			}
+			if (item.parent !== "standalone") {
+				itemBelongsProject(item);
+			}
+			editItem(item);
     }
 
     //get and display the new item if it belongs to the current category
     if (currentcategory === item.category) {
+      getItems(currentcategory);
+    }
+    else if (currentcategory === "focus") {
+      getItems("focus");
+    }
+    else if (currentcategory !== "trash" && currentcategory !== "tags"){
       getItems(currentcategory);
     }
     //reset form and close dialog
@@ -148,17 +187,21 @@ const NewItemDialog = ({visible, setVisible, projectId}) => {
           <Dialog.ScrollArea>
             <ScrollView>
               <Dialog.Content>
+                <Text style={styles.title}>Action name</Text>
                 <TextInput
-                  label="Action Name"
+                  placeholder="Enter name"
+                  placeholderTextColor='#333'
                   value={item.name}
-                  mode="outlined"
                   onChangeText={(text) => handleFormChange(text, 'name')}
+                  style={styles.container}
                 />
+                <Text style={styles.title}>Note or description</Text>
                 <TextInput
-                  label="Note or Description"
+                  placeholder="Enter note"
+                  placeholderTextColor='#333'
                   value={item.note}
-                  mode="outlined"
                   onChangeText={(text) => handleFormChange(text, 'note')}
+                  style={styles.container}
                 />
                 <SelectCategory
                   category={item.category}
@@ -175,7 +218,7 @@ const NewItemDialog = ({visible, setVisible, projectId}) => {
                 item.category !== 'inbox' ? (
                   <SelectParent parent={item.parent} setParent={setParent} />
                 ) : null}
-                <SelectTag setSelectedTags={setTags} />
+                <SelectTag selectedTagsId={selectedTagsId} setSelectedTagsId={setSelectedTagsId} setSelectedTags={setTags} />
 
                 {item.category === 'scheduled' ? (
                   <SelectScheduledDateTime
@@ -209,6 +252,9 @@ const NewItemDialog = ({visible, setVisible, projectId}) => {
             </ScrollView>
           </Dialog.ScrollArea>
           <Dialog.Actions>
+            <HelperText type="error" visible={erroritem}>
+              Action name is required
+            </HelperText>
             <Button onPress={handleSubmit}>Done</Button>
           </Dialog.Actions>
         </Dialog>
@@ -216,5 +262,15 @@ const NewItemDialog = ({visible, setVisible, projectId}) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    borderColor: 'gray', borderWidth: 1, marginVertical: 6, borderRadius: 2, height: 56, fontSize:16, paddingLeft: 8
+  },
+  title: {
+    fontSize: 12,
+    marginTop: 10,
+  },
+});
 
 export default NewItemDialog;
