@@ -5,6 +5,7 @@ import {
 	UPDATE_TAG,
 	CURRENT_TAG,
 	UNSELECT_TAG,
+	FETCH_TAGS
 	/*FOCUS_ITEM,
 	ITEM_STATE,
 	CURRENT_ITEM,
@@ -13,6 +14,11 @@ import {
 
 export default (state, action) => {
 	switch (action.type) {
+		case FETCH_TAGS:
+			return {
+				...state,
+				tags: action.payload
+			}
 		case ADD_TAG:
 			return {
 				...state,

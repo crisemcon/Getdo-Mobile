@@ -14,14 +14,14 @@ const Tags = ({navigation}) => {
 
   //get tagsState
   const tagContext = useContext(tagsContext);
-  const {tags, deleteTag} = tagContext;
+  const {tags, deleteTag, fetchTags} = tagContext;
   const areaTags = tags.filter((tag) => tag.type === 'area');
   const labelTags = tags.filter((tag) => tag.type === 'label');
   const contactTags = tags.filter((tag) => tag.type === 'contact');
 
-  /*useEffect(() => {
-    getTags("next");
-  }, [])*/
+  useEffect(() => {
+    fetchTags();
+  }, [])
 
   const [expandedArea, setExpandedArea] = useState(true);
   const [expandedContact, setExpandedContact] = useState(true);

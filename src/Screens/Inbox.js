@@ -16,8 +16,16 @@ const Inbox = ({navigation}) => {
 
   useEffect(() => {
     async function fetchData(){
-      await fetchItems();
+      //await fetchItems();
       await getItems("inbox");
+      await getItems("focus");
+      await getItems("next");
+      await getItems("notebooks");
+      await getItems("projects");
+      await getItems("scheduled");
+      await getItems("someday");
+      await getItems("trash");
+      await getItems("waiting");
     }
     fetchData();
   }, [])

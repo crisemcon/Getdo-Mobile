@@ -30,7 +30,7 @@ const ItemsState = (props) => {
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
   const initialState = {
     items: [
-      /*{
+      {
 				id: 1,
 				category: "inbox",
 				name: "test inbox1",
@@ -318,7 +318,7 @@ const ItemsState = (props) => {
 				parent: "standalone",
 				items: [],
 				trash: false,
-			},*/
+			},
     ],
     inboxitems: [],
     nextitems: [],
@@ -343,8 +343,10 @@ const ItemsState = (props) => {
     //await AsyncStorage.clear();
     try {
       const keys = await AsyncStorage.getAllKeys();
-      const result = await AsyncStorage.multiGet(keys);
-      const items = result.map((keyvalue) => JSON.parse(keyvalue[1]));
+	  const result = await AsyncStorage.multiGet(keys);
+	  const filter = result.filter(keyvalue => keyvalue[0][0] === "@")
+	  const items = filter.map((keyvalue) => JSON.parse(keyvalue[1]));
+	  console.log(result);
       dispatch({
         type: FETCH_ITEMS,
         payload: items,
@@ -378,7 +380,6 @@ const ItemsState = (props) => {
         type: ADD_ITEM,
         payload: item,
       });
-      alert('Data successfully saved');
     } catch (e) {
       alert('Failed to save the data to the storage');
     }
@@ -399,7 +400,6 @@ const ItemsState = (props) => {
         type: DELETE_ITEM,
         payload: item,
       });
-      alert('Data successfully deleted');
     } catch (e) {
       alert('Failed to delete the data in the storage');
     }
@@ -528,7 +528,6 @@ const ItemsState = (props) => {
         type: EDIT_ITEM,
         payload: item,
       });
-      alert('Data successfully edited');
     } catch (e) {
       alert('Failed to edit the data in the storage');
     }

@@ -245,11 +245,6 @@ const ItemCard = ({item}) => {
               style={{padding: 0}}
               expanded={expanded}
               onPress={() => setExpanded(!expanded)}>
-              {/*<List.Item
-                style={{padding: 0}}
-                titleNumberOfLines={100}
-                title={}
-              />*/}
               {item.note.split(/\n/).map((line) => {
                   if (line[0] === '-')
                     return (
