@@ -13,11 +13,8 @@ import {
   List,
 } from 'react-native-paper';
 
-const NewTagDialog = ({type}) => {
-  const [visible, setVisible] = useState(false);
-
+const NewTagDialog = ({visible, setVisible, type}) => {
   const showDialog = () => setVisible(true);
-
   const hideDialog = () => setVisible(false);
 
   //get tags State
@@ -30,13 +27,6 @@ const NewTagDialog = ({type}) => {
     name: '',
     type: type,
   });
-  //reset tag state
-  const resetState = () => {
-    updateTag({
-      name: '',
-      type: type,
-    });
-  };
 
   //function to read form values
   const handleFormChange = (text, field) => {
@@ -58,7 +48,6 @@ const NewTagDialog = ({type}) => {
 
     //reset form and close dialog
     hideDialog();
-    resetState();
   };
 
   return (

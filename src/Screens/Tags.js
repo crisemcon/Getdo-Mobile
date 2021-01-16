@@ -27,6 +27,10 @@ const Tags = ({navigation}) => {
   const [expandedContact, setExpandedContact] = useState(true);
   const [expandedLabel, setExpandedLabel] = useState(true);
 
+  const [visibleArea, setVisibleArea] = useState(false);
+  const [visibleContact, setVisibleContact] = useState(false);
+  const [visibleLabel, setVisibleLabel] = useState(false);
+
   //TODO:REPLACE SCROLLVIEW WITH FLATLIST FOR PERFORMANCE
 
   useFocusEffect(
@@ -57,7 +61,10 @@ const Tags = ({navigation}) => {
             <TagCard key={tag.id} tag={tag} handleTagDelete={handleTagDelete} />
           ))}
           <View style={{flex: 1, paddingHorizontal: 16}}>
-            <NewTagDialog type="area" />
+          <Button icon="plus" mode="outlined" onPress={() => setVisibleArea(true)}>
+            NEW AREA TAG
+          </Button>
+          {visibleArea ? <NewTagDialog type="area" visible={visibleArea} setVisible={setVisibleArea}/> : null}
           </View>
         </List.Accordion>
         <List.Accordion
@@ -68,7 +75,10 @@ const Tags = ({navigation}) => {
             <TagCard key={tag.id} tag={tag} handleTagDelete={handleTagDelete} />
           ))}
           <View style={{flex: 1, paddingHorizontal: 16}}>
-            <NewTagDialog type="contact" />
+          <Button icon="plus" mode="outlined" onPress={() => setVisibleContact(true)}>
+            NEW CONTACT TAG
+          </Button>
+          {visibleContact ? <NewTagDialog type="contact" visible={visibleContact} setVisible={setVisibleContact}/> : null}
           </View>
         </List.Accordion>
         <List.Accordion
@@ -79,7 +89,10 @@ const Tags = ({navigation}) => {
             <TagCard key={tag.id} tag={tag} handleTagDelete={handleTagDelete} />
           ))}
           <View style={{flex: 1, paddingHorizontal: 16}}>
-            <NewTagDialog type="label" />
+          <Button icon="plus" mode="outlined" onPress={() => setVisibleLabel(true)}>
+            NEW LABEL TAG
+          </Button>
+          {visibleLabel ? <NewTagDialog type="label" visible={visibleLabel} setVisible={setVisibleLabel}/> : null}
           </View>
         </List.Accordion>
       </View>
