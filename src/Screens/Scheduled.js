@@ -13,9 +13,9 @@ const Scheduled = ({navigation}) => {
     scheduleditems,
   } = itemlistContext;
 
-  useEffect(() => {
+  /*useEffect(() => {
     getItems("scheduled");
-  }, [])
+  }, [])*/
 
   const [expanded, setExpanded] = useState(true);
 

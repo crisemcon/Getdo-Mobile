@@ -12,6 +12,7 @@ import {
 	EDIT_ITEM,
 	UNSELECT_ITEM,
 	CURRENT_CATEGORY,
+	FETCH_ITEMS
 	/*ITEM_STATE,
 	CURRENT_ITEM,
 	UPDATE_ITEM,*/
@@ -19,6 +20,11 @@ import {
 
 export default (state, action) => {
 	switch (action.type) {
+		case FETCH_ITEMS:
+			return {
+				...state,
+				items: action.payload
+			}
 		case CURRENT_CATEGORY:
 			return {
 				...state,

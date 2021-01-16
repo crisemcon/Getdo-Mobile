@@ -13,9 +13,9 @@ const Someday = ({navigation}) => {
     somedayitems,
   } = itemlistContext;
 
-  useEffect(() => {
+  /*useEffect(() => {
     getItems("someday");
-  }, [])
+  }, [])*/
 
   const [expanded, setExpanded] = useState(true);
 

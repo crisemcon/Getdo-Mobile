@@ -11,10 +11,15 @@ const Inbox = ({navigation}) => {
   const {
     getItems,
     inboxitems,
+    fetchItems
   } = itemlistContext;
 
   useEffect(() => {
-    getItems("inbox");
+    async function fetchData(){
+      await fetchItems();
+      await getItems("inbox");
+    }
+    fetchData();
   }, [])
 
   const [expanded, setExpanded] = useState(true);

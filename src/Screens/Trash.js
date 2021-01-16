@@ -13,9 +13,9 @@ const Trash = ({navigation}) => {
     trashitems,
   } = itemlistContext;
 
-  useEffect(() => {
+  /*useEffect(() => {
     getItems("trash");
-  }, [])
+  }, [])*/
 
   const [expanded, setExpanded] = useState(true);
 

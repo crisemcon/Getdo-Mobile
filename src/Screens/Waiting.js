@@ -13,9 +13,9 @@ const Waiting = ({navigation}) => {
     waitingitems,
   } = itemlistContext;
 
-  useEffect(() => {
+  /*useEffect(() => {
     getItems("waiting");
-  }, [])
+  }, [])*/
 
   const [expanded, setExpanded] = useState(true);
 

@@ -116,14 +116,14 @@ const ItemCard = ({item}) => {
     doneItem(item);
   };
 
-  const handleItemDelete = () => {
+  const handleItemDelete = async () => {
     if (item.trash) {
-      deleteItem(item);
-      getItems('trash');
+      await deleteItem(item);
+      await getItems('trash');
     } else {
       item.trash = true;
-      editItem(item);
-      getItems(currentcategory);
+      await editItem(item);
+      await getItems(currentcategory);
     }
   };
 

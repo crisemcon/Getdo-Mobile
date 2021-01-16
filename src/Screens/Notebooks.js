@@ -13,9 +13,9 @@ const Notebooks = ({navigation}) => {
     notebooksitems,
   } = itemlistContext;
 
-  useEffect(() => {
+  /*useEffect(() => {
     getItems("notebooks");
-  }, [])
+  }, [])*/
 
   const [expanded, setExpanded] = useState(true);
 

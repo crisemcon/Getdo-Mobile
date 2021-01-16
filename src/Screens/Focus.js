@@ -14,7 +14,7 @@ const Focus = ({navigation}) => {
   } = itemlistContext;
 
   useEffect(() => {
-    getItems("next");
+    getItems("focus");
   }, [])
 
   const [expanded, setExpanded] = useState(true);

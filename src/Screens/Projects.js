@@ -15,10 +15,10 @@ const Projects = ({navigation}) => {
     getProjects,
   } = itemlistContext;
 
-  useEffect(() => {
+  /*useEffect(() => {
     getItems("projects");
     //getProjects();
-  }, [])
+  }, [])*/
 
   const [expanded, setExpanded] = useState(true);
 

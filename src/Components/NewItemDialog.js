@@ -112,7 +112,7 @@ const NewItemDialog = ({visible, setVisible, projectId}) => {
     });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     //e.preventDefault();
     //validate if itemname is empty
     if (item.name.trim() === '') {
@@ -122,10 +122,10 @@ const NewItemDialog = ({visible, setVisible, projectId}) => {
     //checks if it is edition or new item
     if (currentitem === null) {
       //new item
-      addItem(item);
+      await addItem(item);
       //if it has a parent, attach to it
       if (item.parent !== 'standalone') {
-        itemBelongsProject(item);
+        await itemBelongsProject(item);
       }
     } else {
       if (item.category === "notebooks") {
@@ -153,23 +153,23 @@ const NewItemDialog = ({visible, setVisible, projectId}) => {
 				currentitem.parent !== "standalone" &&
 				item.parent !== currentitem.parent
 			) {
-				itemNotBelongsProject(currentitem);
+				await itemNotBelongsProject(currentitem);
 			}
 			if (item.parent !== "standalone") {
-				itemBelongsProject(item);
+				await itemBelongsProject(item);
 			}
-			editItem(item);
+			await editItem(item);
     }
 
     //get and display the new item if it belongs to the current category
     if (currentcategory === item.category) {
-      getItems(currentcategory);
+      await getItems(currentcategory);
     }
     else if (currentcategory === "focus") {
-      getItems("focus");
+      await getItems("focus");
     }
     else if (currentcategory !== "trash" && currentcategory !== "tags"){
-      getItems(currentcategory);
+      await getItems(currentcategory);
     }
     //reset form and close dialog
     hideDialog();
