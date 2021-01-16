@@ -1,5 +1,11 @@
 import React, {useState, useContext, useEffect} from 'react';
-import {View, StyleSheet, TouchableOpacity, ScrollView, TextInput} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+  TextInput,
+} from 'react-native';
 import {
   Button,
   Paragraph,
@@ -27,6 +33,9 @@ const NewItemDialog = ({visible, setVisible, projectId}) => {
     setVisible(false);
     unselectCurrentItem();
   };
+
+  //show activity indicator when submitting
+  const [loading, setLoading] = useState(false);
 
   //get itemsState
   const itemlistContext = useContext(itemsContext);
@@ -70,7 +79,9 @@ const NewItemDialog = ({visible, setVisible, projectId}) => {
         },
   );
 
-  const [selectedTagsId, setSelectedTagsId] = useState(currentitem !== null ? currentitem.tags.map(tag => tag.id) : []);
+  const [selectedTagsId, setSelectedTagsId] = useState(
+    currentitem !== null ? currentitem.tags.map((tag) => tag.id) : [],
+  );
 
   const setCategory = (category) => {
     handleFormChange(category, 'category');
@@ -113,10 +124,12 @@ const NewItemDialog = ({visible, setVisible, projectId}) => {
   };
 
   const handleSubmit = async () => {
+    setLoading(true);
     //e.preventDefault();
     //validate if itemname is empty
     if (item.name.trim() === '') {
       validateItem();
+      setLoading(false);
       return;
     }
     //checks if it is edition or new item
@@ -128,49 +141,56 @@ const NewItemDialog = ({visible, setVisible, projectId}) => {
         await itemBelongsProject(item);
       }
     } else {
-      if (item.category === "notebooks") {
-				item.done = false;
+      if (item.category === 'notebooks') {
+        item.done = false;
       }
-      if (item.category === "scheduled" || item.category === "inbox" || item.category === "notebooks"){
+      if (
+        item.category === 'scheduled' ||
+        item.category === 'inbox' ||
+        item.category === 'notebooks'
+      ) {
         item.dueDate = null;
       }
-      if (item.category !== "scheduled"){
+      if (item.category !== 'scheduled') {
         item.schedule = null;
       }
-      if (item.category !== "waiting"){
+      if (item.category !== 'waiting') {
         item.waiting = undefined;
       }
-      if (item.category === "inbox" || item.category === "notebooks" || item.category === "projects"){
+      if (
+        item.category === 'inbox' ||
+        item.category === 'notebooks' ||
+        item.category === 'projects'
+      ) {
         item.schedule = null;
-        time = undefined;
-        energy = undefined;
-        waiting = undefined;
+        item.time = undefined;
+        item.energy = undefined;
+        item.waiting = undefined;
       }
-      if (item.category !== "projects"){
+      if (item.category !== 'projects') {
         item.items = [];
       }
-			if (
-				currentitem.parent !== "standalone" &&
-				item.parent !== currentitem.parent
-			) {
-				await itemNotBelongsProject(currentitem);
-			}
-			if (item.parent !== "standalone") {
-				await itemBelongsProject(item);
-			}
-			await editItem(item);
+      if (
+        currentitem.parent !== 'standalone' &&
+        item.parent !== currentitem.parent
+      ) {
+        await itemNotBelongsProject(currentitem);
+      }
+      if (item.parent !== 'standalone') {
+        await itemBelongsProject(item);
+      }
+      await editItem(item);
     }
 
     //get and display the new item if it belongs to the current category
     if (currentcategory === item.category) {
       await getItems(currentcategory);
-    }
-    else if (currentcategory === "focus") {
-      await getItems("focus");
-    }
-    else if (currentcategory !== "trash" && currentcategory !== "tags"){
+    } else if (currentcategory === 'focus') {
+      await getItems('focus');
+    } else if (currentcategory !== 'trash' && currentcategory !== 'tags') {
       await getItems(currentcategory);
     }
+    setLoading(false);
     //reset form and close dialog
     hideDialog();
     //resetState();
@@ -190,19 +210,25 @@ const NewItemDialog = ({visible, setVisible, projectId}) => {
                 <Text style={styles.title}>Action name</Text>
                 <TextInput
                   placeholder="Enter name"
-                  placeholderTextColor='#333'
+                  placeholderTextColor="#333"
                   value={item.name}
                   onChangeText={(text) => handleFormChange(text, 'name')}
                   style={styles.container}
+                  autoCapitalize="none"
+                  secureTextEntry={true}
+                  keyboardType={'visible-password'}
                 />
                 <Text style={styles.title}>Note or description</Text>
                 <TextInput
                   placeholder="Enter note"
-                  placeholderTextColor='#333'
+                  placeholderTextColor="#333"
                   value={item.note}
                   onChangeText={(text) => handleFormChange(text, 'note')}
                   style={styles.container}
                   multiline
+                  autoCapitalize="none"
+                  secureTextEntry={true}
+                  keyboardType={'visible-password'}
                 />
                 <SelectCategory
                   category={item.category}
@@ -219,7 +245,11 @@ const NewItemDialog = ({visible, setVisible, projectId}) => {
                 item.category !== 'inbox' ? (
                   <SelectParent parent={item.parent} setParent={setParent} />
                 ) : null}
-                <SelectTag selectedTagsId={selectedTagsId} setSelectedTagsId={setSelectedTagsId} setSelectedTags={setTags} />
+                <SelectTag
+                  selectedTagsId={selectedTagsId}
+                  setSelectedTagsId={setSelectedTagsId}
+                  setSelectedTags={setTags}
+                />
 
                 {item.category === 'scheduled' ? (
                   <SelectScheduledDateTime
@@ -256,7 +286,10 @@ const NewItemDialog = ({visible, setVisible, projectId}) => {
             <HelperText type="error" visible={erroritem}>
               Action name is required
             </HelperText>
-            <Button onPress={handleSubmit}>Done</Button>
+            <Button onPress={hideDialog}>Cancel</Button>
+            <Button loading={loading} onPress={handleSubmit}>
+              Done
+            </Button>
           </Dialog.Actions>
         </Dialog>
       </Portal>
@@ -266,7 +299,13 @@ const NewItemDialog = ({visible, setVisible, projectId}) => {
 
 const styles = StyleSheet.create({
   container: {
-    borderColor: 'gray', borderWidth: 1, marginVertical: 6, borderRadius: 2, height: 56, fontSize:16, paddingLeft: 8
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginVertical: 6,
+    borderRadius: 2,
+    height: 56,
+    fontSize: 16,
+    paddingLeft: 8,
   },
   title: {
     fontSize: 12,

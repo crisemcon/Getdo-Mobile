@@ -15,11 +15,13 @@ import {
 } from 'react-native-paper';
 
 const NewTagDialog = ({visible, setVisible, type}) => {
-  const showDialog = () => setVisible(true);
   const hideDialog = () => {
     unselectCurrentTag();
     setVisible(false);
   };
+
+  //show activity indicator when submitting
+  const [loading, setLoading] = useState(false);
 
   //get itemsState
   const itemlistContext = useContext(itemsContext);
@@ -56,9 +58,11 @@ const NewTagDialog = ({visible, setVisible, type}) => {
   };
 
   const handleSubmit = () => {
+    setLoading(true);
     //validate if tagname is empty
     if (tag.name.trim() === '') {
       validateTag();
+      setLoading(false);
       return;
     }
 
@@ -70,7 +74,7 @@ const NewTagDialog = ({visible, setVisible, type}) => {
       updateTag(tag);
       updateItemsTag(tag);
     }
-
+    setLoading(false);
     //reset form and close dialog
     hideDialog();
   };
@@ -88,13 +92,17 @@ const NewTagDialog = ({visible, setVisible, type}) => {
               value={tag.name}
               mode="outlined"
               onChangeText={(text) => handleFormChange(text, 'name')}
+              autoCapitalize="none"
+ secureTextEntry={true}
+ keyboardType={"visible-password"}
             />
           </Dialog.Content>
           <Dialog.Actions>
             <HelperText type="error" visible={errortag}>
               Tag name is required
             </HelperText>
-            <Button onPress={handleSubmit}>Done</Button>
+            <Button onPress={hideDialog}>Cancel</Button>
+            <Button loading={loading} onPress={handleSubmit}>Done</Button>
           </Dialog.Actions>
         </Dialog>
       </Portal>

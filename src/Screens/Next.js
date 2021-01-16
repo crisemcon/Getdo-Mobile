@@ -13,9 +13,9 @@ const Next = ({navigation}) => {
     nextitems,
   } = itemlistContext;
 
-  /*useEffect(() => {
+  useEffect(() => {
     getItems("next");
-  }, [])*/
+  }, [])
 
   const [expanded, setExpanded] = useState(true);
 
