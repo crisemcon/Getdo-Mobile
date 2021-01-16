@@ -22,11 +22,11 @@ const Focus = ({navigation}) => {
   const handlePress = () => setExpanded(!expanded);
   //TODO:REPLACE SCROLLVIEW WITH FLATLIST FOR PERFORMANCE
 
-  useFocusEffect(
+  /*useFocusEffect(
     useCallback(() => {
       getItems("focus");
     }, [])
-  );
+  );*/
 
   return (
     <ScrollView style={{flex: 1}}>

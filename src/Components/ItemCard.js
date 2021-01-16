@@ -1,5 +1,5 @@
 import React, {useState, useContext} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {
   Avatar,
   Button,
@@ -245,39 +245,42 @@ const ItemCard = ({item}) => {
               style={{padding: 0}}
               expanded={expanded}
               onPress={() => setExpanded(!expanded)}>
-              <List.Item
+              {/*<List.Item
                 style={{padding: 0}}
                 titleNumberOfLines={100}
-                title={item.note.split(/\n/).map((line) => {
+                title={}
+              />*/}
+              {item.note.split(/\n/).map((line) => {
                   if (line[0] === '-')
                     return (
-                      <React.Fragment key={line}>
+                      <View key={line} style={{flexDirection:'row', minWidth: '100%', alignItems: 'center'}}>
                         <Checkbox
                           status={'unchecked'}
                           onPress={() => handleNoteCheck(line)}
                         />
 
-                        {line.slice(1)}
-                      </React.Fragment>
+                      <Text key={line} variant="body2">{line.slice(1)}</Text>
+                      </View>
                     );
                   if (line[0] === 'x')
                     return (
-                      <React.Fragment key={line}>
+                      <View key={line} style={{flexDirection:'row', minWidth: '100%', alignItems: 'center'}}>
                         <Checkbox
                           status={'checked'}
                           onPress={() => handleNoteCheck(line)}
                         />
 
-                        {line.slice(1)}
-                      </React.Fragment>
+                        <Text key={line} variant="body2">{line.slice(1)}</Text>
+                        </View>
                     );
                   return (
+                    <View key={line} style={{flexDirection:'row', minWidth: '100%',padding: 8}}>
                     <Text key={line} variant="body2">
                       {line}
                     </Text>
+                    </View>
                   );
                 })}
-              />
             </List.Accordion>
           ) : null}
         </Card.Content>

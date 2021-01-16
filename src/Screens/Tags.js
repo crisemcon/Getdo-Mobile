@@ -33,11 +33,11 @@ const Tags = ({navigation}) => {
 
   //TODO:REPLACE SCROLLVIEW WITH FLATLIST FOR PERFORMANCE
 
-  useFocusEffect(
+  /*useFocusEffect(
     useCallback(() => {
       getItems('tags');
     }, []),
-  );
+  );*/
 
   //delete tag
   const handleTagDelete = (tagid) => {

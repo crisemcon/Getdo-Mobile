@@ -22,11 +22,11 @@ const Waiting = ({navigation}) => {
   const handlePress = () => setExpanded(!expanded);
   //TODO:REPLACE SCROLLVIEW WITH FLATLIST FOR PERFORMANCE
 
-  useFocusEffect(
+  /*useFocusEffect(
     useCallback(() => {
       getItems("waiting");
     }, [])
-  );
+  );*/
 
   return (
     <ScrollView style={{flex: 1}}>

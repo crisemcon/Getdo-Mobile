@@ -22,11 +22,11 @@ const Someday = ({navigation}) => {
   const handlePress = () => setExpanded(!expanded);
   //TODO:REPLACE SCROLLVIEW WITH FLATLIST FOR PERFORMANCE
 
-  useFocusEffect(
+  /*useFocusEffect(
     useCallback(() => {
       getItems("someday");
     }, [])
-  );
+  );*/
 
   return (
     <ScrollView style={{flex: 1}}>

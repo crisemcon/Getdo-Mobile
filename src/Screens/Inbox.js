@@ -22,11 +22,11 @@ const Inbox = ({navigation}) => {
   const handlePress = () => setExpanded(!expanded);
   //TODO:REPLACE SCROLLVIEW WITH FLATLIST FOR PERFORMANCE
 
-  useFocusEffect(
+  /*useFocusEffect(
     useCallback(() => {
       getItems("inbox");
     }, [])
-  );
+  );*/
 
   return (
     <ScrollView style={{flex: 1}}>

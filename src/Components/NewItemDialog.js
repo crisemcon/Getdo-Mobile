@@ -202,6 +202,7 @@ const NewItemDialog = ({visible, setVisible, projectId}) => {
                   value={item.note}
                   onChangeText={(text) => handleFormChange(text, 'note')}
                   style={styles.container}
+                  multiline
                 />
                 <SelectCategory
                   category={item.category}

@@ -22,11 +22,11 @@ const Notebooks = ({navigation}) => {
   const handlePress = () => setExpanded(!expanded);
   //TODO:REPLACE SCROLLVIEW WITH FLATLIST FOR PERFORMANCE
 
-  useFocusEffect(
+  /*useFocusEffect(
     useCallback(() => {
       getItems("notebooks");
     }, [])
-  );
+  );*/
 
   return (
     <ScrollView style={{flex: 1}}>
