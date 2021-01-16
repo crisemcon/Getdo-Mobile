@@ -1,5 +1,5 @@
 import React, {useState, useContext, useEffect} from 'react';
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, ScrollView} from 'react-native';
 import {
   Button,
   Paragraph,
@@ -16,6 +16,9 @@ import SelectTag from './SelectTag';
 import SelectParent from './SelectParent';
 import SelectTimeRequired from './SelectTimeRequired';
 import SelectEnergyRequired from './SelectEnergyRequired';
+import SelectDueDate from './SelectDueDate';
+import SelectScheduledDateTime from './SelectScheduledDateTime';
+import SelectWaiting from './SelectWaiting';
 
 import itemsContext from '../context/items/itemsContext';
 
@@ -91,7 +94,19 @@ const NewItemDialog = () => {
   };
 
   const setEnergyRequired = (energy) => {
-    handleFormChange(energy, 'energy')
+    handleFormChange(energy, 'energy');
+  };
+
+  const setDueDate = (duedate) => {
+    handleFormChange(duedate, 'dueDate');
+  };
+
+  const setScheduledDate = (scheduleddate) => {
+    handleFormChange(scheduleddate, 'schedule')
+  }
+
+  const setWaiting = (waitingtag) => {
+    handleFormChange(waitingtag, 'waiting')
   }
 
   //function to read form values
@@ -102,54 +117,100 @@ const NewItemDialog = () => {
     });
   };
 
+  const handleSubmit = () => {
+		//e.preventDefault();
+		//validate if itemname is empty
+		if (item.name.trim() === "") {
+			validateItem();
+			return;
+		}
+
+		//checks if it is edition or new item
+		if(currentitem === null){
+			//new item
+			addItem(item);
+			//if it has a parent, attach to it
+			if (item.parent !== "standalone") {
+				itemBelongsProject(item);
+			}
+		} else {
+			editItem(item);
+		}
+
+		//get and display the new item if it belongs to the current category
+		if (currentcategory === item.category) {
+			getItems(currentcategory);
+		}
+		//reset form and close dialog
+		hideDialog();
+		//resetState();
+	};
+
   return (
     <View>
       <Portal>
         <FAB style={styles.fab} icon="plus" onPress={showDialog} />
       </Portal>
       <Portal>
-        <Dialog visible={visible} onDismiss={hideDialog}>
+        <Dialog
+          visible={visible}
+          onDismiss={hideDialog}
+          style={{maxHeight: '90%'}}>
           <Dialog.Title>New Action</Dialog.Title>
-          <Dialog.Content>
-            <TextInput
-              label="Action Name"
-              value={item.name}
-              mode="outlined"
-              onChangeText={(text) => handleFormChange(text, 'name')}
-            />
-            <TextInput
-              label="Note or Description"
-              value={item.note}
-              mode="outlined"
-              onChangeText={(text) => handleFormChange(text, 'note')}
-            />
-            <SelectCategory
-              category={item.category}
-              setCategory={setCategory}
-            />
-            {item.category !== 'projects' &&
-            item.category !== 'notebooks' &&
-            item.category !== 'inbox' ? (
-              <SelectParent parent={item.parent} setParent={setParent} />
-            ) : null}
-            <SelectTag setSelectedTags={setTags} />
-            {item.category !== 'projects' &&
-            item.category !== 'notebooks' &&
-            item.category !== 'inbox' ? (
-              <>
-              <SelectTimeRequired
-                time={item.time}
-                setTimeRequired={setTimeRequired}
-              />
-              <SelectEnergyRequired
-                energy={item.energy}
-                setEnergyRequired={setEnergyRequired}
-              />
-              </>
-            ) : null}
-          </Dialog.Content>
+          <Dialog.ScrollArea>
+            <ScrollView>
+              <Dialog.Content>
+                <TextInput
+                  label="Action Name"
+                  value={item.name}
+                  mode="outlined"
+                  onChangeText={(text) => handleFormChange(text, 'name')}
+                />
+                <TextInput
+                  label="Note or Description"
+                  value={item.note}
+                  mode="outlined"
+                  onChangeText={(text) => handleFormChange(text, 'note')}
+                />
+                <SelectCategory
+                  category={item.category}
+                  setCategory={setCategory}
+                />
+                {item.category === "waiting" ? (
+                  <SelectWaiting waiting={item.waiting} setWaiting={setWaiting} />
+                ) : null}
+                {item.category !== 'projects' &&
+                item.category !== 'notebooks' &&
+                item.category !== 'inbox' ? (
+                  <SelectParent parent={item.parent} setParent={setParent} />
+                ) : null}
+                <SelectTag setSelectedTags={setTags} />
+                
+                {item.category === "scheduled" ? (
+                  <SelectScheduledDateTime scheduledDate={item.schedule} setScheduledDate={setScheduledDate} />
+                ) : null }
+                {item.category !== 'inbox' && item.category !== 'notebooks' && item.category !== 'scheduled' ? (
+                  <SelectDueDate duedate={item.dueDate} setDueDate={setDueDate} />
+                ) : null}
+                {item.category !== 'projects' &&
+                item.category !== 'notebooks' &&
+                item.category !== 'inbox' ? (
+                  <>
+                    <SelectTimeRequired
+                      time={item.time}
+                      setTimeRequired={setTimeRequired}
+                    />
+                    <SelectEnergyRequired
+                      energy={item.energy}
+                      setEnergyRequired={setEnergyRequired}
+                    />
+                  </>
+                ) : null}
+              </Dialog.Content>
+            </ScrollView>
+          </Dialog.ScrollArea>
           <Dialog.Actions>
-            <Button onPress={hideDialog}>Done</Button>
+            <Button onPress={handleSubmit}>Done</Button>
           </Dialog.Actions>
         </Dialog>
       </Portal>

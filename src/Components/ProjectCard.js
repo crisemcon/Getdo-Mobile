@@ -13,10 +13,12 @@ import {
   Surface,
   Chip,
   Text,
+  Divider,
 } from 'react-native-paper';
 
 import {CheckBox as IconCheckBox} from 'react-native-elements';
 import itemsContext from '../context/items/itemsContext';
+import ItemCard from './ItemCard';
 
 const tagIcon = (tagtype) => {
   if (tagtype === 'label') {
@@ -54,31 +56,32 @@ function timeConversion(millisec) {
   }
 }
 
-const calcTimeRequired = (time) => {
-  if (time === 60) {
-    return `1 hour`;
-  } else if (time > 60) {
-    return `${time / 60} hours`;
-  }
-  return `${time} minutes`;
+//calculate project time required
+export const calcProjectTimeRequired = (items) => {
+	let sumTime = 0;
+	let flag = "";
+	items.forEach((item) => {
+		item.time ? (sumTime += item.time) : (flag = ">");
+	});
+	if (sumTime === 0) {
+		return `Not set`;
+	} else if (sumTime === 60) {
+		return `${flag}1 hour`;
+	} else if (sumTime > 60) {
+		return `${flag}${(sumTime / 60).toFixed(0)} hours`;
+	}
+	return `${flag}${sumTime} minutes`;
 };
 
-const energyIcon = (energy) => {
-  if (energy === "Low") {
-    return "battery-20";
-  } else if (energy === "Medium") {
-    return "battery-50";
-  } else return "battery-80";
-};
-
-const ItemCard = ({item}) => {
+const ProjectCard = ({item}) => {
   //get itemsState
   const itemlistContext = useContext(itemsContext);
   const {
     getItems,
     focusItem,
     doneItem,
-    getProjectById,
+	getProjectById,
+	getItemsById,
     editItem,
     saveCurrentItem,
     deleteItem,
@@ -91,12 +94,7 @@ const ItemCard = ({item}) => {
     focus,
     note,
     tags,
-    parent,
     dueDate,
-    time,
-    energy,
-    waiting,
-    schedule,
   } = item;
 
   const [expanded, setExpanded] = useState(true);
@@ -144,16 +142,13 @@ const ItemCard = ({item}) => {
     <Card style={{borderRadius: 6, marginBottom: 6}}>
       <Card.Title
         title={name}
-        subtitle={
-          parent !== 'standalone' ? getProjectById(item.parent)[0].name : null
-        }
         left={(props) => (
-          item.category !== "notebooks" ? (
+          
           <Checkbox
             {...props}
             status={done ? 'checked' : 'unchecked'}
             onPress={handleItemDone}
-          />) : <Avatar.Icon size={36} icon="notebook" />
+          />
         )}
         right={(props) => (
           //<IconButton icon="dots-vertical" onPress={() => {}} />
@@ -188,29 +183,14 @@ const ItemCard = ({item}) => {
                   </Chip>
                 </React.Fragment>
               ))}
-          {schedule ? (
-            <Chip mode="outlined" icon="calendar-clock" style={styles.tag}>
-              {schedule.toLocaleString()}
-            </Chip>
-          ) : null}
-          {waiting ? (
-            <Chip mode="outlined" icon="account-clock" style={styles.tag}>
-              {waiting}
-            </Chip>
-          ) : null}
           {dueDate ? (
             <Chip mode="outlined" icon="calendar-remove" style={styles.tag}>
               {calcDueDate(dueDate)}
             </Chip>
           ) : null}
-          {time ? (
+          {item.items.length !== 0 ? (
             <Chip mode="outlined" icon="timer-sand" style={styles.tag}>
-              {calcTimeRequired(time)}
-            </Chip>
-          ) : null}
-          {energy ? (
-            <Chip mode="outlined" icon={energyIcon(energy)} style={styles.tag}>
-              {energy}
+              {calcProjectTimeRequired(getItemsById(item.items))}
             </Chip>
           ) : null}
         </Surface>
@@ -244,6 +224,17 @@ const ItemCard = ({item}) => {
 							);
 						return <Text key={line} variant="body2">{line}</Text>;
 					})} />
+					<Divider/>
+					{item.items.length !== 0 //!== undefined ,if this get errors
+						? getItemsById(item.items).map((item) => (
+								<React.Fragment key={item.id}>
+									<ItemCard
+										item={item}
+									/>
+									<Divider light />
+								</React.Fragment>
+						  ))
+						: null}
         </List.Accordion> : null}
       </Card.Content>
     </Card>
@@ -261,4 +252,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ItemCard;
+export default ProjectCard;

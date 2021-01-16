@@ -491,7 +491,7 @@ const ItemsState = (props) => {
 				scheduleditems: state.scheduleditems,
 				somedayitems: state.somedayitems,
 				focusitems: state.focusitems,
-				projectsitems: state.projectitems,
+				projectsitems: state.projectsitems,
 				notebooksitems: state.notebooksitems,
 				trashitems: state.trashitems,
 				currentcategory: state.currentcategory,

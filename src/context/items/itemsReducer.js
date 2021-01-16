@@ -46,7 +46,16 @@ export default (state, action) => {
 						(item) => item.category === action.payload && item.trash === false
 					),
 				};
-			} else if (action.payload === "scheduled") {
+			} else if (action.payload === "waiting") {
+				return {
+					...state,
+					waitingitems: state.items.filter(
+						(item) => item.category === action.payload && item.trash === false
+					),
+				};
+			} 
+			
+			else if (action.payload === "scheduled") {
 				return {
 					...state,
 					scheduleditems: state.items.filter(
