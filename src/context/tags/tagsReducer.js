@@ -3,6 +3,8 @@ import {
 	VALIDATE_TAG,
 	DELETE_TAG,
 	UPDATE_TAG,
+	CURRENT_TAG,
+	UNSELECT_TAG,
 	/*FOCUS_ITEM,
 	ITEM_STATE,
 	CURRENT_ITEM,
@@ -32,6 +34,17 @@ export default (state, action) => {
 				...state,
 				tags: state.tags.map(tag => tag.id === action.payload.id ? action.payload : tag),
 				errortag: false,
+				currenttag: null,
+			}
+		case CURRENT_TAG:
+			return {
+				...state,
+				currenttag: action.payload
+			}
+		case UNSELECT_TAG:
+			return {
+				...state,
+				currenttag: null
 			}
 		default:
 			return state;

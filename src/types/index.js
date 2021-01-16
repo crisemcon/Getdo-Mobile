@@ -23,6 +23,8 @@ export const DELETE_TAG = 'DELETE_TAG';
 export const UPDATE_TAG = 'UPDATE_TAG';
 export const FETCH_TAGS = 'FETCH_TAGS';
 export const TAG_ERROR = 'TAG_ERROR';
+export const CURRENT_TAG = 'CURRENT_TAG';
+export const UNSELECT_TAG = 'UNSELECT_TAG';
 
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const REGISTER_ERROR = 'REGISTER_ERROR';

@@ -4,7 +4,7 @@ import tagsReducer from "./tagsReducer";
 
 import { v4 as uuid } from "uuid";
 
-import {ADD_TAG, VALIDATE_TAG, DELETE_TAG, UPDATE_TAG } from "../../types";
+import {ADD_TAG, VALIDATE_TAG, DELETE_TAG, UPDATE_TAG, CURRENT_TAG, UNSELECT_TAG } from "../../types";
 
 const TagsState = (props) => {
 	const initialState = {
@@ -17,6 +17,7 @@ const TagsState = (props) => {
 			{ id: 6, name: "Celular", type: "label" },
 		],
 		errortag: false,
+		currenttag: null,
 	};
 	
 	//create dispatch and state
@@ -63,16 +64,34 @@ const TagsState = (props) => {
 		})
 	}
 
+	//extracts a tag to edit
+	const saveCurrentTag = tag => {
+		dispatch({
+			type: CURRENT_TAG,
+			payload: tag,
+		})
+	}
+
+	//unselect current tag
+	const unselectCurrentTag = () => {
+		dispatch({
+			type: UNSELECT_TAG,
+		})
+	}
+
 
 	return (
 		<tagsContext.Provider value={{
 			tags: state.tags,
 			errortag: state.errortag,
+			currenttag: state.currenttag,
 			getTags,
 			addTag,
 			validateTag,
 			deleteTag,
 			updateTag,
+			saveCurrentTag,
+			unselectCurrentTag,
 
 		}}>{props.children}</tagsContext.Provider>
 	);
