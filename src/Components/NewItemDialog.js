@@ -55,7 +55,23 @@ const NewItemDialog = ({visible, setVisible, projectId}) => {
 
   const [item, updateItem] = useState(
     currentitem !== null
-      ? currentitem
+      ? {
+        id: currentitem.id,
+        name: currentitem.name,
+        note: currentitem.note,
+        category: currentitem.category,
+        tags: currentitem.tags,
+        parent: currentitem.parent,
+        focus: currentitem.focus,
+        done: currentitem.done,
+        items: currentitem.items,
+        dueDate: currentitem.dueDate ? new Date(currentitem.dueDate) : null,
+        time: currentitem.time,
+        energy: currentitem.energy,
+        waiting: currentitem.waiting,
+        schedule: currentitem.schedule ? new Date(currentitem.schedule) : null,
+        trash: currentitem.trash,
+      }
       : {
           name: '',
           note: '',

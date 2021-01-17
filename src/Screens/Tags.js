@@ -21,7 +21,7 @@ const Tags = ({navigation}) => {
 
   useEffect(() => {
     fetchTags();
-  }, [])
+  }, []);
 
   const [expandedArea, setExpandedArea] = useState(true);
   const [expandedContact, setExpandedContact] = useState(true);
@@ -47,56 +47,97 @@ const Tags = ({navigation}) => {
   };
 
   return (
-    <ScrollView style={{flex: 1}}>
+    <>
       <Appbar.Header>
         <Appbar.Action icon="menu" onPress={() => navigation.openDrawer()} />
         <Appbar.Content title="Tags" />
       </Appbar.Header>
-      <View style={{flex: 1, padding: 6}}>
-        <List.Accordion
-          title="Areas"
-          expanded={expandedArea}
-          onPress={() => setExpandedArea(!expandedArea)}>
-          {areaTags.map((tag) => (
-            <TagCard key={tag.id} tag={tag} handleTagDelete={handleTagDelete} />
-          ))}
-          <View style={{flex: 1, paddingHorizontal: 16}}>
-          <Button icon="plus" mode="outlined" onPress={() => setVisibleArea(true)}>
-            NEW AREA TAG
-          </Button>
-          {visibleArea ? <NewTagDialog type="area" visible={visibleArea} setVisible={setVisibleArea}/> : null}
-          </View>
-        </List.Accordion>
-        <List.Accordion
-          title="Contacts"
-          expanded={expandedContact}
-          onPress={() => setExpandedContact(!expandedContact)}>
-          {contactTags.map((tag) => (
-            <TagCard key={tag.id} tag={tag} handleTagDelete={handleTagDelete} />
-          ))}
-          <View style={{flex: 1, paddingHorizontal: 16}}>
-          <Button icon="plus" mode="outlined" onPress={() => setVisibleContact(true)}>
-            NEW CONTACT TAG
-          </Button>
-          {visibleContact ? <NewTagDialog type="contact" visible={visibleContact} setVisible={setVisibleContact}/> : null}
-          </View>
-        </List.Accordion>
-        <List.Accordion
-          title="Labels"
-          expanded={expandedLabel}
-          onPress={() => setExpandedLabel(!expandedLabel)}>
-          {labelTags.map((tag) => (
-            <TagCard key={tag.id} tag={tag} handleTagDelete={handleTagDelete} />
-          ))}
-          <View style={{flex: 1, paddingHorizontal: 16}}>
-          <Button icon="plus" mode="outlined" onPress={() => setVisibleLabel(true)}>
-            NEW LABEL TAG
-          </Button>
-          {visibleLabel ? <NewTagDialog type="label" visible={visibleLabel} setVisible={setVisibleLabel}/> : null}
-          </View>
-        </List.Accordion>
-      </View>
-    </ScrollView>
+      <ScrollView style={{flex: 1}}>
+        <View style={{flex: 1, padding: 6}}>
+          <List.Accordion
+            title="Areas"
+            expanded={expandedArea}
+            onPress={() => setExpandedArea(!expandedArea)}>
+            {areaTags.map((tag) => (
+              <TagCard
+                key={tag.id}
+                tag={tag}
+                handleTagDelete={handleTagDelete}
+              />
+            ))}
+            <View style={{flex: 1, paddingHorizontal: 16}}>
+              <Button
+                icon="plus"
+                mode="outlined"
+                onPress={() => setVisibleArea(true)}>
+                NEW AREA TAG
+              </Button>
+              {visibleArea ? (
+                <NewTagDialog
+                  type="area"
+                  visible={visibleArea}
+                  setVisible={setVisibleArea}
+                />
+              ) : null}
+            </View>
+          </List.Accordion>
+          <List.Accordion
+            title="Contacts"
+            expanded={expandedContact}
+            onPress={() => setExpandedContact(!expandedContact)}>
+            {contactTags.map((tag) => (
+              <TagCard
+                key={tag.id}
+                tag={tag}
+                handleTagDelete={handleTagDelete}
+              />
+            ))}
+            <View style={{flex: 1, paddingHorizontal: 16}}>
+              <Button
+                icon="plus"
+                mode="outlined"
+                onPress={() => setVisibleContact(true)}>
+                NEW CONTACT TAG
+              </Button>
+              {visibleContact ? (
+                <NewTagDialog
+                  type="contact"
+                  visible={visibleContact}
+                  setVisible={setVisibleContact}
+                />
+              ) : null}
+            </View>
+          </List.Accordion>
+          <List.Accordion
+            title="Labels"
+            expanded={expandedLabel}
+            onPress={() => setExpandedLabel(!expandedLabel)}>
+            {labelTags.map((tag) => (
+              <TagCard
+                key={tag.id}
+                tag={tag}
+                handleTagDelete={handleTagDelete}
+              />
+            ))}
+            <View style={{flex: 1, paddingHorizontal: 16}}>
+              <Button
+                icon="plus"
+                mode="outlined"
+                onPress={() => setVisibleLabel(true)}>
+                NEW LABEL TAG
+              </Button>
+              {visibleLabel ? (
+                <NewTagDialog
+                  type="label"
+                  visible={visibleLabel}
+                  setVisible={setVisibleLabel}
+                />
+              ) : null}
+            </View>
+          </List.Accordion>
+        </View>
+      </ScrollView>
+    </>
   );
 };
 

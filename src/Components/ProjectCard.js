@@ -20,59 +20,7 @@ import {CheckBox as IconCheckBox} from 'react-native-elements';
 import itemsContext from '../context/items/itemsContext';
 import ItemCard from './ItemCard';
 import NewItemDialog from './NewItemDialog';
-
-const tagIcon = (tagtype) => {
-  if (tagtype === 'label') {
-    return 'label';
-  } else if (tagtype === 'area') {
-    return 'map-marker';
-  }
-  return 'account';
-};
-
-//calculate dueDate
-const calcDueDate = (dueDate) => {
-  const now = new Date();
-  const elapsed = dueDate.getTime() - now.getTime();
-  return timeConversion(elapsed);
-};
-
-function timeConversion(millisec) {
-  const hours = (millisec / (1000 * 60 * 60)).toFixed(1);
-  const days = (millisec / (1000 * 60 * 60 * 24)).toFixed(0);
-  const weeks = (days / 7).toFixed(0);
-
-  if (hours < -24) {
-    return `${days * -1} days late`;
-  } else if (hours < 0 && hours >= -24) {
-    return `Yesterday`;
-  } else if (hours >= 0 && hours < 24) {
-    return `Today`;
-  } else if (hours >= 24 && hours < 48) {
-    return `Tomorrow`;
-  } else if (days >= 2 && days < 14) {
-    return days + " Days";
-  } else {
-    return `${weeks} weeks`;
-  }
-}
-
-//calculate project time required
-export const calcProjectTimeRequired = (items) => {
-	let sumTime = 0;
-	let flag = "";
-	items.forEach((item) => {
-		item.time && !item.done ? (sumTime += item.time) : (flag = ">");
-	});
-	if (sumTime === 0) {
-		return `Not set`;
-	} else if (sumTime === 60) {
-		return `${flag}1 hour`;
-	} else if (sumTime > 60) {
-		return `${flag}${(sumTime / 60).toFixed(0)} hours`;
-	}
-	return `${flag}${sumTime} minutes`;
-};
+import {calcDueDate, calcProjectTimeRequired, tagIcon} from '../functions'
 
 const ProjectCard = ({item}) => {
   //get itemsState

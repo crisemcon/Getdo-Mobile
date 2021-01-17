@@ -39,6 +39,7 @@ export default function App() {
           <NavigationContainer>
             <Drawer.Navigator
               initialRouteName="GETDO"
+              backBehavior='initialRoute'
               drawerContent={(props) => <Sidebar {...props} />}>
               <Drawer.Screen name="Inbox" component={Inbox} />
               <Drawer.Screen name="Next" component={Next} />
