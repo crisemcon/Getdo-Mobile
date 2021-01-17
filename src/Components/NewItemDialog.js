@@ -222,7 +222,7 @@ const NewItemDialog = ({visible, setVisible, projectId}) => {
           onDismiss={hideDialog}
           style={{maxHeight: '90%'}}>
           <Dialog.Title>New Action</Dialog.Title>
-          <Dialog.ScrollArea>
+          <Dialog.ScrollArea style={{paddingHorizontal: 0}}>
             <ScrollView>
               <Dialog.Content>
                 <Text style={styles.title}>Action name</Text>

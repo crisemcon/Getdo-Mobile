@@ -34,7 +34,7 @@ const SelectScheduledDateTime = ({scheduledDate, setScheduledDate}) => {
     <>
     <Text style={styles.title}>Schedule</Text>
     <View style={styles.container}>
-        <TouchableOpacity onPress={showDatepicker} style={{flex:1,justifyContent: 'center', marginLeft: 10}}>
+        <TouchableOpacity onPress={showDatepicker} style={{flex:1,justifyContent: 'center', marginLeft: 8}}>
         <Text style={{fontSize: 16}}>{scheduledDate ? scheduledDate.toLocaleString() : 'Not set'}</Text>
         </TouchableOpacity>
         {scheduledDate ?

@@ -12,7 +12,8 @@ const Header = ({icon, title, navigation}) => {
 
         <Switch
 		  value={isThemeDark}
-		  onValueChange={toggleTheme}
+      onValueChange={toggleTheme}
+      style={{marginRight: 6}}
         />
 
     </Appbar.Header>

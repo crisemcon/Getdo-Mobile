@@ -118,7 +118,8 @@ export default function App() {
             <Drawer.Navigator
               initialRouteName="Inbox"
               backBehavior="initialRoute"
-              drawerContent={(props) => <Sidebar {...props} />}>
+              drawerContent={(props) => <Sidebar {...props} 
+              />}>
               <Drawer.Screen name="Inbox" component={Inbox} />
               <Drawer.Screen name="Next" component={Next} />
               <Drawer.Screen name="Waiting" component={Waiting} />
