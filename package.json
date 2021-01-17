@@ -1,5 +1,5 @@
 {
-  "name": "getdonavigator",
+  "name": "GETDO",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -21,6 +21,7 @@
     "native-base": "^2.15.0",
     "react": "16.13.1",
     "react-native": "0.63.4",
+    "react-native-bootsplash": "^3.1.2",
     "react-native-elements": "^3.1.0",
     "react-native-gesture-handler": "^1.9.0",
     "react-native-get-random-values": "^1.5.1",

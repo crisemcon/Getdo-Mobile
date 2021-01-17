@@ -16,7 +16,7 @@ import Projects from './src/Screens/Projects';
 import Notebooks from './src/Screens/Notebooks';
 import Trash from './src/Screens/Trash';
 import Sidebar from './src/Components/Sidebar';
-
+import {StatusBar} from 'react-native';
 import {
   DarkTheme as PaperDarkTheme,
   DefaultTheme as PaperDefaultTheme,
@@ -29,7 +29,9 @@ import ItemsState from './src/context/items/itemsState';
 import TagState from './src/context/tags/tagsState';
 import NewItemFAB from './src/Components/NewItemFAB';
 
-import { PreferencesContext } from './src/context/PreferencesContext';
+import {PreferencesContext} from './src/context/PreferencesContext';
+
+import RNBootSplash from 'react-native-bootsplash';
 
 const Drawer = createDrawerNavigator();
 
@@ -44,21 +46,21 @@ const DefaultTheme = {
   fonts: {
     regular: {
       fontFamily: 'Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif',
-      fontWeight: '400'
+      fontWeight: '400',
     },
     medium: {
       fontFamily: 'Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif',
-      fontWeight: '500'
+      fontWeight: '500',
     },
     light: {
       fontFamily: 'Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif',
-      fontWeight: '300'
+      fontWeight: '300',
     },
     thin: {
       fontFamily: 'Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif',
-      fontWeight: '100'
+      fontWeight: '100',
     },
-  }
+  },
 };
 
 const DarkTheme = {
@@ -66,33 +68,37 @@ const DarkTheme = {
   roundness: 2,
   colors: {
     ...PaperDarkTheme.colors,
-    primary: "#03dac4",
-    accent: "#03dac4",
+    primary: '#03dac4',
+    accent: '#03dac4',
   },
   fonts: {
     regular: {
       fontFamily: 'Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif',
-      fontWeight: '400'
+      fontWeight: '400',
     },
     medium: {
       fontFamily: 'Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif',
-      fontWeight: '500'
+      fontWeight: '500',
     },
     light: {
       fontFamily: 'Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif',
-      fontWeight: '300'
+      fontWeight: '300',
     },
     thin: {
       fontFamily: 'Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif',
-      fontWeight: '100'
+      fontWeight: '100',
     },
-  }
+  },
 };
 
-const CombinedDefaultTheme = merge(NavigationDefaultTheme,DefaultTheme);
-const CombinedDarkTheme = merge(NavigationDarkTheme,DarkTheme);
+const CombinedDefaultTheme = merge(NavigationDefaultTheme, DefaultTheme);
+const CombinedDarkTheme = merge(NavigationDarkTheme, DarkTheme);
 
 export default function App() {
+  React.useEffect(() => {
+    RNBootSplash.hide({fade: true});
+  }, []);
+
   const [isThemeDark, setIsThemeDark] = React.useState(true);
 
   let theme = isThemeDark ? CombinedDarkTheme : CombinedDefaultTheme;
@@ -106,36 +112,43 @@ export default function App() {
       toggleTheme,
       isThemeDark,
     }),
-    [toggleTheme, isThemeDark]
+    [toggleTheme, isThemeDark],
   );
 
   return (
     <PreferencesContext.Provider value={preferences}>
-    <ItemsState>
-      <TagState>
-        <PaperProvider theme={theme}>
-          <NavigationContainer theme={theme}>
-            <Drawer.Navigator
-              initialRouteName="Inbox"
-              backBehavior="initialRoute"
-              drawerContent={(props) => <Sidebar {...props} 
-              />}>
-              <Drawer.Screen name="Inbox" component={Inbox} />
-              <Drawer.Screen name="Next" component={Next} />
-              <Drawer.Screen name="Waiting" component={Waiting} />
-              <Drawer.Screen name="Scheduled" component={Scheduled} />
-              <Drawer.Screen name="Someday" component={Someday} />
-              <Drawer.Screen name="Focus" component={Focus} />
-              <Drawer.Screen name="Tags" component={Tags} />
-              <Drawer.Screen name="Projects" component={Projects} />
-              <Drawer.Screen name="Notebooks" component={Notebooks} />
-              <Drawer.Screen name="Trash" component={Trash} />
-            </Drawer.Navigator>
-          </NavigationContainer>
-          <NewItemFAB />
-        </PaperProvider>
-      </TagState>
-    </ItemsState>
+      <ItemsState>
+        <TagState>
+          <PaperProvider theme={theme}>
+            <NavigationContainer theme={theme}>
+              <StatusBar
+                backgroundColor={
+                  isThemeDark
+                    ? DarkTheme.colors.background
+                    : DefaultTheme.colors.primary
+                }
+                barStyle={isThemeDark ? 'light-content' : 'dark-content'}
+              />
+              <Drawer.Navigator
+                initialRouteName="Inbox"
+                backBehavior="initialRoute"
+                drawerContent={(props) => <Sidebar {...props} />}>
+                <Drawer.Screen name="Inbox" component={Inbox} />
+                <Drawer.Screen name="Next" component={Next} />
+                <Drawer.Screen name="Waiting" component={Waiting} />
+                <Drawer.Screen name="Scheduled" component={Scheduled} />
+                <Drawer.Screen name="Someday" component={Someday} />
+                <Drawer.Screen name="Focus" component={Focus} />
+                <Drawer.Screen name="Tags" component={Tags} />
+                <Drawer.Screen name="Projects" component={Projects} />
+                <Drawer.Screen name="Notebooks" component={Notebooks} />
+                <Drawer.Screen name="Trash" component={Trash} />
+              </Drawer.Navigator>
+            </NavigationContainer>
+            <NewItemFAB />
+          </PaperProvider>
+        </TagState>
+      </ItemsState>
     </PreferencesContext.Provider>
   );
 }

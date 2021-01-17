@@ -3,14 +3,16 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '10.0'
 
-target 'getdonavigator' do
+target 'GETDO' do
   config = use_native_modules!
 
   use_react_native!(:path => config["reactNativePath"])
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
-  target 'getdonavigatorTests' do
+  pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
+
+  target 'GETDOTests' do
     inherit! :complete
     # Pods for testing
   end
@@ -25,10 +27,10 @@ target 'getdonavigator' do
   end
 end
 
-target 'getdonavigator-tvOS' do
-  # Pods for getdonavigator-tvOS
+target 'GETDO-tvOS' do
+  # Pods for GETDO-tvOS
 
-  target 'getdonavigator-tvOSTests' do
+  target 'GETDO-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end
