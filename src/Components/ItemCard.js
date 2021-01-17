@@ -13,6 +13,7 @@ import {
   Surface,
   Chip,
   Text,
+  useTheme
 } from 'react-native-paper';
 
 import {calcDueDate, calcTimeRequired, tagIcon, energyIcon} from '../functions'
@@ -22,6 +23,7 @@ import itemsContext from '../context/items/itemsContext';
 import NewItemDialog from '../Components/NewItemDialog';
 
 const ItemCard = ({item}) => {
+  const {colors} = useTheme();
   //get itemsState
   const itemlistContext = useContext(itemsContext);
   const {
@@ -121,7 +123,7 @@ const ItemCard = ({item}) => {
           }
           right={(props) => (
             //<IconButton icon="dots-vertical" onPress={() => {}} />
-            <Surface
+            <View
               style={{alignItems: 'center', flexDirection: 'row-reverse'}}>
               <Menu
                 visible={visible}
@@ -139,15 +141,15 @@ const ItemCard = ({item}) => {
                 iconType="material"
                 checkedIcon="star"
                 uncheckedIcon="star-outline"
-                checkedColor="red"
+                checkedColor={colors.primary}
                 checked={focus}
                 onPress={handleItemFocus}
               />
-            </Surface>
+            </View>
           )}
         />
         <Card.Content>
-          <Surface style={styles.tagContainer}>
+          <View style={styles.tagContainer}>
             {tags.length === 0
               ? null
               : tags.map((tag) => (
@@ -188,7 +190,7 @@ const ItemCard = ({item}) => {
                 {energy}
               </Chip>
             ) : null}
-          </Surface>
+          </View>
           {note.length !== 0 ? (
             <List.Accordion
               style={{padding: 0}}

@@ -5,6 +5,7 @@ import ItemCard from '../Components/ItemCard';
 import itemsContext from '../context/items/itemsContext';
 import tagsContext from '../context/tags/tagsContext';
 import {useFocusEffect} from '@react-navigation/native';
+import Header from '../Components/Header';
 
 const Inbox = ({navigation}) => {
   //get itemsState
@@ -36,10 +37,7 @@ const Inbox = ({navigation}) => {
 
   return (
     <>
-      <Appbar.Header>
-        <Appbar.Action icon="menu" onPress={() => navigation.openDrawer()} />
-        <Appbar.Content title="Inbox" />
-      </Appbar.Header>
+      <Header title="Inbox" navigation={navigation} />
       <ScrollView style={{flex: 1}}>
         <View style={{flex: 1, padding: 6}}>
           {inboxitems.map((item) =>

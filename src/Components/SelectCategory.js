@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet} from 'react-native';
+import {Text, useTheme } from 'react-native-paper';
 
 import {Picker} from '@react-native-community/picker';
 
@@ -14,7 +15,7 @@ const Category = [
 ];
 
 const SelectCategory = ({category, setCategory}) => {
-  
+  const { colors } = useTheme();
 
   return (
     <>
@@ -22,7 +23,7 @@ const SelectCategory = ({category, setCategory}) => {
     <View style={styles.container}> 
         <Picker
           selectedValue={category}
-          style={{height: 56, color: '#333'}}
+          style={{height: 56, color: colors.text}}
           onValueChange={(itemValue, itemIndex) =>
             setCategory(itemValue)
           }>

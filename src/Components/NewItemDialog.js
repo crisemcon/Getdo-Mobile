@@ -15,6 +15,7 @@ import {
   HelperText,
   Text,
   List,
+  useTheme 
 } from 'react-native-paper';
 
 import SelectCategory from './SelectCategory';
@@ -29,6 +30,7 @@ import SelectWaiting from './SelectWaiting';
 import itemsContext from '../context/items/itemsContext';
 
 const NewItemDialog = ({visible, setVisible, projectId}) => {
+  const { colors } = useTheme();
   const hideDialog = () => {
     setVisible(false);
     unselectCurrentItem();
@@ -226,10 +228,10 @@ const NewItemDialog = ({visible, setVisible, projectId}) => {
                 <Text style={styles.title}>Action name</Text>
                 <TextInput
                   placeholder="Enter name"
-                  placeholderTextColor="#333"
+                  placeholderTextColor={colors.text}
                   value={item.name}
                   onChangeText={(text) => handleFormChange(text, 'name')}
-                  style={styles.container}
+                  style={{...styles.container,color: colors.text}}
                   autoCapitalize="none"
                   secureTextEntry={true}
                   keyboardType={'visible-password'}
@@ -237,14 +239,13 @@ const NewItemDialog = ({visible, setVisible, projectId}) => {
                 <Text style={styles.title}>Note or description</Text>
                 <TextInput
                   placeholder="Enter note"
-                  placeholderTextColor="#333"
+                  placeholderTextColor={colors.text}
                   value={item.note}
                   onChangeText={(text) => handleFormChange(text, 'note')}
-                  style={styles.container}
+                  style={{...styles.container,color: colors.text}}
                   multiline
                   autoCapitalize="none"
                   secureTextEntry={true}
-                  keyboardType={'visible-password'}
                 />
                 <SelectCategory
                   category={item.category}

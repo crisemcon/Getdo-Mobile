@@ -346,7 +346,6 @@ const ItemsState = (props) => {
 	  const result = await AsyncStorage.multiGet(keys);
 	  const filter = result.filter(keyvalue => keyvalue[0][0] === "@")
 	  const items = filter.map((keyvalue) => JSON.parse(keyvalue[1]));
-	  console.log(result);
       dispatch({
         type: FETCH_ITEMS,
         payload: items,

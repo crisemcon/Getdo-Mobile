@@ -1,5 +1,6 @@
 import React, {useState, useContext} from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet} from 'react-native';
+import {Text, useTheme} from 'react-native-paper';
 
 import {Picker} from '@react-native-community/picker';
 import tagsContext from '../context/tags/tagsContext';
@@ -7,6 +8,8 @@ import tagsContext from '../context/tags/tagsContext';
 import {IconButton} from 'react-native-paper';
 
 const SelectWaiting = ({waiting, setWaiting}) => {
+  const { colors, fonts } = useTheme();
+  console.log(fonts)
 	//get tagsState
 	const tagContext = useContext(tagsContext);
 	const {tags} = tagContext;
@@ -17,7 +20,7 @@ const SelectWaiting = ({waiting, setWaiting}) => {
     <View style={styles.container}>
         <Picker
           selectedValue={waiting}
-          style={{height: 56}}
+          style={{height: 56, color: colors.text}}
           onValueChange={(itemValue, itemIndex) =>
             setWaiting(itemValue)
           }>

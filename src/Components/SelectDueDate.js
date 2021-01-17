@@ -23,7 +23,7 @@ const SelectDueDate = ({duedate, setDueDate}) => {
     <Text style={styles.title}>Due Date</Text>
     <View style={styles.container}>
         <TouchableOpacity onPress={showDatepicker} style={{flex:1,justifyContent: 'center', marginLeft: 10}}>
-        <Text style={{fontSize: 16, color: '#333'}}>{duedate ? duedate.toDateString() : 'Not Set'}</Text>
+        <Text style={{fontSize: 16}}>{duedate ? duedate.toDateString() : 'Not Set'}</Text>
         </TouchableOpacity>
         {duedate ?
         <IconButton

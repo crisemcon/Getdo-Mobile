@@ -5,6 +5,7 @@ import ItemCard from '../Components/ItemCard';
 import itemsContext from '../context/items/itemsContext';
 import {useFocusEffect} from '@react-navigation/native';
 import ProjectCard from '../Components/ProjectCard';
+import Header from '../Components/Header';
 
 const Projects = ({navigation}) => {
   //get itemsState
@@ -30,10 +31,7 @@ const Projects = ({navigation}) => {
 
   return (
     <>
-      <Appbar.Header>
-        <Appbar.Action icon="menu" onPress={() => navigation.openDrawer()} />
-        <Appbar.Content title="Projects" />
-      </Appbar.Header>
+      <Header title="Projects" navigation={navigation} />
       <ScrollView style={{flex: 1}}>
         <View style={{flex: 1, padding: 6}}>
           {projectsitems.map((item) =>

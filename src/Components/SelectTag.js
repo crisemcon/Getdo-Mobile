@@ -1,12 +1,14 @@
 import React, {useRef, useState, useContext} from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
+import {Text, useTheme} from 'react-native-paper';
 
 import tagsContext from '../context/tags/tagsContext';
 
 
 const SelectTag = ({selectedTagsId, setSelectedTagsId, setSelectedTags}) => {
+  const { colors, fonts } = useTheme();
   //get tagsState
   const tagContext = useContext(tagsContext);
   const {tags} = tagContext;
@@ -48,6 +50,13 @@ const SelectTag = ({selectedTagsId, setSelectedTagsId, setSelectedTags}) => {
         onSelectedItemObjectsChange	={setSelectedTags}
         selectedItems={selectedTagsId}
         styles={{selectToggle: styles.container}}
+        showCancelButton
+        itemFontFamily={fonts.regular}
+        subItemFontFamily={fonts.regular}
+        searchTextFontFamily={fonts.regular}
+        confirmFontFamily={fonts.regular}
+        selectToggleIconComponent={<Icon name="arrow-drop-down" size={24} color={colors.backdrop}/>}
+        colors={{selectToggleTextColor: colors.text, primary: colors.primary, cancel: colors.backdrop, success: colors.accent}}
       />
     </View>
   );
@@ -62,6 +71,7 @@ const styles = StyleSheet.create({
     height: 56,
     alignContent: 'center',
     paddingHorizontal: 8,
+    paddingRight: 12
   },
   title: {
     fontSize: 12,

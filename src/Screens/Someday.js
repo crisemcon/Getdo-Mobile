@@ -4,6 +4,7 @@ import {Appbar, List} from 'react-native-paper';
 import ItemCard from '../Components/ItemCard';
 import itemsContext from '../context/items/itemsContext';
 import {useFocusEffect} from '@react-navigation/native';
+import Header from '../Components/Header';
 
 const Someday = ({navigation}) => {
   //get itemsState
@@ -27,10 +28,7 @@ const Someday = ({navigation}) => {
 
   return (
     <>
-      <Appbar.Header>
-        <Appbar.Action icon="menu" onPress={() => navigation.openDrawer()} />
-        <Appbar.Content title="Someday" />
-      </Appbar.Header>
+      <Header title="Someday" navigation={navigation} />
       <ScrollView style={{flex: 1}}>
         <View style={{flex: 1, padding: 6}}>
           {somedayitems.map((item) =>

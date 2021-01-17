@@ -35,3 +35,5 @@ export const SIGN_OUT = 'SIGN_OUT';
 
 export const SHOW_ALERT = 'SHOW_ALERT';
 export const HIDE_ALERT = 'HIDE_ALERT';
+
+export const TOGGLE_DARK = 'TOGGLE_DARK';

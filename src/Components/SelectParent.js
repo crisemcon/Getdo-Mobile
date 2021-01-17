@@ -1,10 +1,12 @@
 import React, {useState, useContext} from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet} from 'react-native';
+import {Text, useTheme} from 'react-native-paper';
 
 import {Picker} from '@react-native-community/picker';
 import itemsContext from '../context/items/itemsContext';
 
 const SelectParent = ({parent, setParent}) => {
+  const { colors } = useTheme();
   //get itemsState
 	const itemlistContext = useContext(itemsContext);
 	const {
@@ -17,7 +19,7 @@ const SelectParent = ({parent, setParent}) => {
     <View style={styles.container}>
         <Picker
           selectedValue={parent}
-          style={{height: 56, color: '#333'}}
+          style={{height: 56, color: colors.text}}
           onValueChange={(itemValue, itemIndex) =>
             setParent(itemValue)
           }>

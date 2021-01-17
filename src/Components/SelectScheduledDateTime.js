@@ -1,7 +1,7 @@
 import React, {useState, useContext} from 'react';
-import {View, StyleSheet, Button, TouchableOpacity, Text} from 'react-native';
+import {View, StyleSheet, Button, TouchableOpacity} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { IconButton } from 'react-native-paper';
+import { IconButton, Text } from 'react-native-paper';
 
 
 const SelectScheduledDateTime = ({scheduledDate, setScheduledDate}) => {

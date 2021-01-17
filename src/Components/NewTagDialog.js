@@ -93,8 +93,8 @@ const NewTagDialog = ({visible, setVisible, type}) => {
               mode="outlined"
               onChangeText={(text) => handleFormChange(text, 'name')}
               autoCapitalize="none"
- secureTextEntry={true}
- keyboardType={"visible-password"}
+              secureTextEntry={true}
+              keyboardType={'visible-password'}
             />
           </Dialog.Content>
           <Dialog.Actions>
@@ -102,7 +102,9 @@ const NewTagDialog = ({visible, setVisible, type}) => {
               Tag name is required
             </HelperText>
             <Button onPress={hideDialog}>Cancel</Button>
-            <Button loading={loading} onPress={handleSubmit}>Done</Button>
+            <Button loading={loading} onPress={handleSubmit}>
+              Done
+            </Button>
           </Dialog.Actions>
         </Dialog>
       </Portal>

@@ -6,6 +6,7 @@ import itemsContext from '../context/items/itemsContext';
 import {useFocusEffect} from '@react-navigation/native';
 import TagCard from '../Components/TagCard';
 import NewTagDialog from '../Components/NewTagDialog';
+import Header from '../Components/Header';
 
 const Tags = ({navigation}) => {
   //get itemsState
@@ -48,10 +49,7 @@ const Tags = ({navigation}) => {
 
   return (
     <>
-      <Appbar.Header>
-        <Appbar.Action icon="menu" onPress={() => navigation.openDrawer()} />
-        <Appbar.Content title="Tags" />
-      </Appbar.Header>
+      <Header title="Tags" navigation={navigation} />
       <ScrollView style={{flex: 1}}>
         <View style={{flex: 1, padding: 6}}>
           <List.Accordion

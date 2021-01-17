@@ -1,5 +1,6 @@
 import React, {useState, useContext} from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet} from 'react-native';
+import {Text,useTheme} from 'react-native-paper';
 
 import {Picker} from '@react-native-community/picker';
 
@@ -17,14 +18,14 @@ const Times = [
 ];
 
 const SelectTimeRequired = ({time, setTimeRequired}) => {
-
+  const { colors } = useTheme();
   return (
     <>
     <Text style={styles.title}>Time Required</Text>
     <View style={styles.container}>
         <Picker
           selectedValue={time}
-          style={{height: 56, color: '#333'}}
+          style={{height: 56, color: colors.text}}
           onValueChange={(itemValue, itemIndex) =>
             setTimeRequired(itemValue)
           }>
