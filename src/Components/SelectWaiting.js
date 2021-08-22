@@ -9,7 +9,6 @@ import {IconButton} from 'react-native-paper';
 
 const SelectWaiting = ({waiting, setWaiting}) => {
   const { colors, fonts } = useTheme();
-  console.log(fonts)
 	//get tagsState
 	const tagContext = useContext(tagsContext);
 	const {tags} = tagContext;

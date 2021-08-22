@@ -107,6 +107,7 @@ const ItemCard = ({item}) => {
       <Card style={{borderRadius: 6, marginBottom: 6}}>
         <Card.Title
           title={name}
+          titleNumberOfLines={3}
           subtitle={
             parent !== 'standalone' ? getProjectById(item.parent)[0].name : null
           }

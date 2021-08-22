@@ -14,7 +14,7 @@ const getActiveRouteState = function (routes, index, name) {
   };
 
 const Sidebar = ({...props}) => {
-	const { colors, fonts } = useTheme();
+	const { colors} = useTheme();
 	//get itemsState
 	const itemlistContext = useContext(itemsContext);
 	const { setCurrentCategory, getItems } = itemlistContext;
