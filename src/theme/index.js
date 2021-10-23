@@ -13,19 +13,19 @@ export const DefaultTheme = {
 	},
 	fonts: {
 	  regular: {
-		fontFamily: 'Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif',
+		//fontFamily: 'Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif',
 		fontWeight: '400',
 	  },
 	  medium: {
-		fontFamily: 'Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif',
+		//fontFamily: 'Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif',
 		fontWeight: '500',
 	  },
 	  light: {
-		fontFamily: 'Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif',
+		//fontFamily: 'Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif',
 		fontWeight: '300',
 	  },
 	  thin: {
-		fontFamily: 'Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif',
+		//fontFamily: 'Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif',
 		fontWeight: '100',
 	  },
 	},
@@ -41,19 +41,19 @@ export const DefaultTheme = {
 	},
 	fonts: {
 	  regular: {
-		fontFamily: 'Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif',
+		//fontFamily: 'Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif',
 		fontWeight: '400',
 	  },
 	  medium: {
-		fontFamily: 'Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif',
+		//fontFamily: 'Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif',
 		fontWeight: '500',
 	  },
 	  light: {
-		fontFamily: 'Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif',
+		//fontFamily: 'Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif',
 		fontWeight: '300',
 	  },
 	  thin: {
-		fontFamily: 'Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif',
+		//fontFamily: 'Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif',
 		fontWeight: '100',
 	  },
 	},
