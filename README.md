@@ -1,5 +1,5 @@
 <p align="center">
- <img width=200px height=200px src="./src/assets/splashhd.png" alt="Project logo">
+ <img width=200px height=200px src="./readme-assets/ic_launcher.png" alt="Project logo">
 </p>
 
 <h2 align="center">GETDO</h2>
