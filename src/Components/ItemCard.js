@@ -195,6 +195,7 @@ const ItemCard = ({item}) => {
           {note.length !== 0 ? (
             <List.Accordion
               style={{padding: 0}}
+              
               expanded={expanded}
               onPress={() => setExpanded(!expanded)}>
               {item.note.split(/\n/).map((line) => {
